@@ -6,6 +6,7 @@ peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state',  
 
     $scope.userInfo = authentication.getUserInfo();
     
+    $scope.invalidLogin = false;
     $scope.userNameExists = false;
     $scope.errorCreatingUser = false;
 
@@ -37,9 +38,14 @@ peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state',  
 
     $scope.checkAuthentication = function(){
         authentication.login($scope.profile).then(function(data){
+            $scope.invalidLogin = false;
             if(data.status == 200){
                 console.log(data);
                 $state.go(data.data.role);
+            }
+
+            else{
+                $scope.invalidLogin = true;
             }
             
         });

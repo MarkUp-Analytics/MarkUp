@@ -1,0 +1,49 @@
+<div class="container bg-none" ng-controller="mainController">
+  <main>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <form class="form-signin p-3">
+          <h3 class="form-signin-heading">Create your Markup Account</h3>
+          <br/>
+          <div class="input-group mb-4">
+            <input type="text" class="form-control mr-4" id="firstName" placeholder="First name" ng-model="newUser.firstName" required>
+            <input type="text" class="form-control" id="lastName" placeholder="Last name" ng-model="newUser.lastName" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="schoolName" placeholder="School name" ng-model="newUser.schoolName" required>
+          </div>
+          <div class="form-group">
+            <input type="text" id="userName" class="form-control" ng-class="userNameExists?'highlightError':''" ng-model="newUser.username" ng-change="userNameExists = false; errorCreatingUser = false" placeholder="Username" required>
+            <div ng-if="userNameExists" class="mt-2 errorMsg">User name already exists!</div> 
+            <div ng-if="errorCreatingUser" class="mt-2 errorMsg">Error creating user!</div>
+          </div>
+          <div class="form-group">
+            <input type="password" id="password" class="form-control" ng-model="newUser.pwd" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="repeatPassword" class="form-control" ng-model="newUser.pwd" placeholder="Confirm Password" required>
+          </div>
+          <div class="form-group">
+            <select class="form-control" ng-model="newUser.role" aria-placeholder="Role">
+              <option value="" disabled selected>Select your role</option>
+              <option value="admin">Admin</option>
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-sm-6">
+              <button class="btn btn-lg btn-danger btn-block rounded-0 pointer" ng-click="createUser()" type="submit">Create User</button>
+            </div>
+            <div class="col-sm-6">
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </main>
+</div>

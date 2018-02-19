@@ -1,0 +1,46 @@
+body {background: #EAEAEA; font-family: 'Roboto', sans-serif; font-size: 95%}
+main {min-height: 50vh}
+.container {width: 95%}
+.width-height-100-px {width: 100px; height: 100px}
+.overflow-hidden {overflow: hidden;}
+
+.hisdif {height: 250px}
+
+.bg-fafafa {background: #FAFAFA}
+.bg-ffffff {background: #FFFFFF}
+.bg-index-jumbotron {background: url(../../images/index-jumbotron.png) center center; background-repeat: no-repeat; background-size: cover;height: 600px;}
+.bg-study-smarter-not-harder {background: url(../../images/study-smarter-not-harder.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
+.bg-track-progress {background: url(../../images/track-progress.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
+.bg-know-where-you-stand {background: url(../../images/know-where-you-stand.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
+.bg-exceed-expectations {background: url(../../images/exceed-expectations.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
+.bg-index-pricing {background: url(../../images/index-pricing.png) center center; background-repeat: no-repeat; background-size: cover; height: 350px;}
+.bg-markup-green {background: #00A3B4}
+.bg-markup-red {background: #F7005F}
+.bg-markup-violet {background: #69005C}
+.bg-markup-yellow {background: #E3A000}
+
+.text-markup-green {color: #00A3B4}
+.text-markup-red {color: #F7005F}
+.text-markup-violet {color: #69005C}
+.text-markup-yellow {color: #E3A000}
+.font-weight-thin {font-weight:100}
+.text-size-90-pc {font-size: 90%}
+.text-size-120-pc {font-size: 120%}
+
+a {color: #999999}
+a:focus, a:hover {color: #555555}
+
+.form-control {background: none}
+.form-control:focus,.form-control:hover {background: none; box-shadow: none}
+.btn-guide:focus {box-shadow: none}
+
+ .flex-equal > * {-ms-flex: 1; -webkit-box-flex: 1; flex: 1;}
+
+@media screen and (min-width: 576px) {
+  @media screen and (min-width: 768px) {
+    .flex-lg-equal > * {-ms-flex: 1; -webkit-box-flex: 1; flex: 1;}
+    @media screen and (min-width: 992px) {
+      .container {width: 980px}
+    }
+  }
+}

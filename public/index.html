@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="TBU: Enter Brief Description" content="">
+    <meta name="Peercentile" content="">
+
+    <link rel="icon" href="TBU: Icon">
+    <title>Peercentile | Tagline</title>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="./angularApp.js"></script>
+    <script src="./app/Controllers/mainController.js"></script>
+    <script src="./app/Controllers/adminController.js"></script>
+    <script src = "./app/Services/authentication.js"></script>
+    <script src = "./app/Services/fileUpload.js"></script>
+    <script src="./app/Scripts/Directives/fileModel.js"></script>
+    
+    <link href="./app/Styles/bootstrap.min.css" rel="stylesheet">
+    <link href="./app/Styles/main.css" rel="stylesheet">
+    <link href="./app/Styles/custom.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+  </head>
+
+  <body ng-app="peercentileApp">
+      <div ng-include src="'app/Views/header.html'"></div>
+      <div class="bg-white" ui-view></div>
+      <div ng-include src="'app/Views/footer.html'"></div>
+  </body>
+</html>

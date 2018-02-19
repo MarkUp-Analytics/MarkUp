@@ -1,0 +1,18 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white" ng-controller="mainController">
+    <div class="my-0 mr-md-auto">
+      <img src="images/markup_rectangle.png" class="pointer d-none d-md-block" width="175" ui-sref="home"/>
+      <img src="images/markup_square.png" class="d-md-none" height="100" />
+    </div>
+    <nav class="my-2 my-md-0 mr-md-3">
+      <a class="p-2" href="" ng-click="scrollTo('Features')">Why Markup?</a>
+      <a class="p-2" href="" ng-click="scrollTo('Pricing')">Pricing</a>
+      <a class="p-2" href="" ng-click="scrollTo('About')">About Us</a>
+      <a class="p-2" href="" ng-click="scrollTo('Contact')">Contact</a>
+    </nav>
+    <a ng-if="!userInfo" class="btn btn-outline-secondary pointer" ui-sref="login">
+      Sign In
+    </a>
+    <a ng-if="userInfo" class="btn btn-outline-secondary pointer" ng-click="logout()">
+        Sign Out
+      </a>
+  </div>

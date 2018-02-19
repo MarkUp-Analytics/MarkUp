@@ -1,0 +1,10 @@
+.pointer {cursor: pointer;}
+.errorMsg{
+    color:darkred;
+}
+
+.highlightError{
+    border: red;
+    border-style: solid;
+    border-width: thin;
+}

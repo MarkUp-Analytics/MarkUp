@@ -3,6 +3,7 @@
 peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state',  '$location', '$anchorScroll', 'authentication',  function($scope, $rootScope, $state, $location, $anchorScroll, authentication){
 
     window.$scope = $scope;
+    $scope.$state = $state;
 
     $scope.userInfo = authentication.getUserInfo();
     

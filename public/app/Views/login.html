@@ -1,55 +1,40 @@
-<div class="container bg-none" ng-controller="mainController">
-  <main>
-    <div class="row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
-        <form class="form-signin p-3">
-          <h3 class="form-signin-heading">Sign in to continue</h3>
-          <br/>
-          <div ng-if="invalidLogin" class="mb-2 errorMsg alert alert-danger">Invalid User name/Password!</div> 
-          <div class="form-group">
-            <label for="schoolName">*School Name</label>
-            <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="schoolName" placeholder="School name"
-              ng-model="profile.schoolName" ng-change="invalidLogin = false;" required>
-          </div>
-          <div class="form-group">
-            <label for="userName">*Username</label>
-            <input type="text" id="userName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.username"
-              placeholder="Username" ng-change="invalidLogin = false;" required>
-          </div>
-          <div class="form-group">
-            <label for="password">*Password</label>
-            <input type="password" id="password" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.pwd"
-              placeholder="Password" ng-change="invalidLogin = false;" required>
-          </div>
-          <br/>
-          <div class="row">
-            <div class="col-6">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="remember-me"> Remember me
-                </label>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="checkbox">
-                <a href="#">Forgot Password</a>
-              </div>
-            </div>
-          </div>
-          <br/>
-          <div class="row">
-            <div class="col-sm-6">
-              <button class="btn btn-lg btn-danger btn-block rounded-0 pointer" ng-click="checkAuthentication()" type="submit">Sign in</button>
-            </div>
-            <div class="col-sm-6">
-              <a href="" class="btn btn-lg btn-primary btn-block rounded-0 pointer" ui-sref="createUser">New User?</a>
-            </div>
-          </div>
+<div class="container bg-fdfdfd px-0">
+  <div ng-include src="'app/Views/homeHeader.html'"></div>
 
-        </form>
+  <div class="box-shadow" ng-controller="mainController">
+
+    <form class="form-signin mx-auto text-center">
+      <img class="mb-3 mt-5" src="images/markup_square.png" alt="" width="200">
+      <h2 class="mb-3 font-weight-normal">Please sign in</h2>
+      <div ng-if="invalidLogin" class="mb-2 errorMsg alert alert-danger">Invalid User name/Password!</div>
+      <div class="form-group">
+        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="schoolName" placeholder="School name"
+          ng-model="profile.schoolName" ng-change="invalidLogin = false;" required>
       </div>
-      <div class="col-sm-2"></div>
-    </div>
-  </main>
+      <div class="form-group">
+        <input type="text" id="userName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.username"
+          placeholder="Username" ng-change="invalidLogin = false;" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.pwd"
+          placeholder="Password" ng-change="invalidLogin = false;" required>
+      </div>
+      <div class="checkbox mt-3">
+        <label class="text-secondary">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <a href="#">Forgot Password?</a>
+      <button class="btn btn-outline-primary btn-block rounded-0 mt-3 mb-5 pointer" type="submit" ng-click="checkAuthentication()">Sign In</button>
+
+      <a ng-hide="true" href="" class="btn btn-lg btn-primary btn-block rounded-0 pointer" ui-sref="createUser">New User?</a>
+    </form>
+
+    <section class="p-5 text-center border border-left-0 border-right-0 border-bottom-0">
+      <h2 class="text-secondary">Would you like to get Markup to your school?</h2>
+      <a class="btn btn-outline-secondary rounded-0" href="#">
+        Get In Touch
+      </a>
+    </section>
+  </div>
 </div>

@@ -13,7 +13,9 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('home', {
                 url: "/home",
+                
                 templateUrl: "./app/Views/home.html"
+                
             })
 
             .state('about', {

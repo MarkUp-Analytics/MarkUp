@@ -13,9 +13,9 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('home', {
                 url: "/home",
-                
+
                 templateUrl: "./app/Views/home.html"
-                
+
             })
 
             .state('about', {
@@ -63,14 +63,50 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: "./app/Views/login.html"
             })
 
-            .state('createUser', {
+            .state('manager-createUser', {
                 url: "/createNewUser",
-                templateUrl: "./app/Views/newUser.html"
+                templateUrl: "./app/Views/newUser.html",
+                data: {// This is the permission array. This state can be accessed by users with manager role and admin role.
+                    permission: ["manager", "admin"]
+                }
+
             })
 
             .state('admin', {
                 url: "/admin",
                 controller: "adminController",
-                templateUrl: "./app/Views/admin.html"
+                templateUrl: "./app/Views/admin.html",
+                data: {
+                    permission: ["admin"]
+                }
             })
     }]);
+
+peercentileApp.run(['$rootScope', '$state', '$stateParams', 'authentication',
+    function ($rootScope, $state, $stateParams, authentication) {
+        /* This part of code is responsible for preventing users from accessing other routes. A student user should not able to see teacher's pages. */
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+            var roles = toState.data ? (toState.data.permission ? toState.data.permission : []) : [];
+
+            if (toState.name.indexOf('admin') > -1 || toState.name.indexOf('student') > -1 || toState.name.indexOf('teacher') > -1 || toState.name.indexOf('manager') > -1) {
+                //If the state name has the role, then it will check for the permission array in that state to make sure the logged in user has permission or not.
+
+                if (!authentication.isAuthenticated() || roles.indexOf(authentication.getRole()) == -1) {
+                    event.preventDefault();
+                    $state.go('home');
+                }
+            }
+            
+            //If a user is already logged in, they cannot access login page
+            else if (toState.name == 'login' && authentication.isAuthenticated()) {
+                event.preventDefault();
+                $state.go(authentication.getRole());
+            }
+
+        });
+    }])
+
+
+

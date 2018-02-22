@@ -1,3 +1,5 @@
+'use strict';
+
 peercentileApp.service('fileUpload', ['$http', 
         function($http){
             this.upload = function(file){

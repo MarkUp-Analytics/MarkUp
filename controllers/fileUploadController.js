@@ -21,7 +21,7 @@ module.exports = function(app){
     
     app.post('/api/upload', upload, function (req, res, next) {
         if(req.file){
-            readCSV(req.file.path);
+           // readCSV(req.file.path);
             console.log(req.file);
             res.send("Success");
         }

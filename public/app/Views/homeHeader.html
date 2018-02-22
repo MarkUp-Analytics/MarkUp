@@ -11,7 +11,17 @@
   <a ng-if="!userInfo" class="btn btn-outline-primary pointer" ui-sref="login">
     Sign In
   </a>
-  <a ng-if="userInfo" class="btn btn-outline-secondary pointer" ng-click="logout()">
-    Sign Out
-  </a>
+  <div ng-if="userInfo">
+    <ul class="navbar-nav text-center">
+      <li>
+        <span>
+          <b>{{userInfo.username}}</b>
+        </span>
+      </li>
+      <li class="text-size-90-pc">
+        <a href="" ui-sref="settings">Settings</a> |
+        <a href="" ng-click="logout()">Sign out</a>
+      </li>
+    </ul>
+  </div>
 </div>

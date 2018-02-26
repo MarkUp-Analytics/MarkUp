@@ -1,0 +1,62 @@
+<div class="container bg-fdfdfd px-0 pb-5">
+
+    <div ng-include src="'app/Views/homeHeader.html'"></div>
+
+    <div ng-controller="adminController">
+        <div class="row mx-0 p-3 px-md-5">
+            <div class="col-md">
+                <figure class="figure">
+                    <img src="images/students-spreadsheet-sample.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                    <figcaption class="figure-caption text-center">Sample file for students</figcaption>
+                    <hr class="d-block d-md-none border border-top-0" />
+                </figure>
+            </div>
+
+            <form class="col-md">
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">
+                        <span class=" text-size-90-pc">
+                            <p>Browse for the spreadsheet of students, in CSV/XLSX format.</p>
+                            <p>Column A should have the unique registration number / roll number of students. This number should
+                                be different for each of the students enrolled, as this number will serve as their respective
+                                usernames.
+                            </p>
+                            <p>Column B should have the student's First name.</p>
+                            <p>Column C should have the student's Last name/Initial.</p>
+                            <p>Column D should have the student's class.</p>
+                            <p>Column E should have the student's section.</p>
+                            <p>Column F should have the student's Date of Birth(DOB).</p>
+                            <p>Student
+                                <i>Shriram Narayanan S</i> of class
+                                <i>6F</i>, whose registration number is
+                                <i>17CS1039</i>
+                                <br/> Column A: 17CS1039
+                                <br/> Column B: Shriram Narayanan
+                                <br/> Column C: Kannusami
+                                <br/> Column D: 6
+                                <br/> Column E: F
+                                <br/>Column F: 23/09/1989
+                                <br/>
+                            </p>
+                        </span>
+                    </label>
+                    <!-- <div ng-if="noFileFound" class="errorMsg">Please select a file to upload!</div> -->
+                    <div ng-if="noFileFound" class="errorMsg">{{applicationMessages.getMessage('noFileFound')}}</div>
+                    <div ng-if="wrongFileExtension" class="errorMsg">{{applicationMessages.getMessage('wrongFileExtension')}}</div>
+
+                    <input type="file" id="upload_teachers_userinfo" file-model ng-model="filePath" />
+                </div>
+            </form>
+        </div>
+
+        <hr class="mr-5 ml-5 border border-top-0" />
+
+        <div class="row mx-0 p-3 pb-5 px-md-5">
+            <div class="col-md text-right">
+                <button type="button" class="btn btn-primary" ng-click="uploadFile()">Upload</button>
+                <button type="button" class="btn btn-secondary" ng-click="filePath=null;">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>

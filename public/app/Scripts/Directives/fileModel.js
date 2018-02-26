@@ -1,15 +1,20 @@
 peercentileApp.directive('fileModel', ['$parse', function ($parse) {
     return {
-       restrict: 'A',
-       link: function(scope, element, attrs) {
-          var model = $parse(attrs.fileModel);
-          var modelSetter = model.assign;
-          
-          element.bind('change', function(){
-             scope.$apply(function(){
-                modelSetter(scope, element[0].files[0]);
-             });
-          });
-       }
+        restrict: 'A',
+        require: 'ngModel',
+        link: function ($scope, el, attrs, ngModel) {
+            el.bind('change', function (event) {
+                ngModel.$setViewValue(event.target.files[0]);
+                $scope.$apply();
+            });
+
+            $scope.$watch(function () {
+                return ngModel.$viewValue;
+            }, function (value) {
+                if (!value) {
+                    el.val("");
+                }
+            });
+        }
     };
- }]);
+}]);

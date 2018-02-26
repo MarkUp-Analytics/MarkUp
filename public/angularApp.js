@@ -2,6 +2,7 @@ var peercentileApp = angular.module('peercentileApp', [
     'ngRoute'
     , 'ui.router'
     , 'ngStorage'
+    , 'ngDialog'
 
 ]);
 
@@ -75,7 +76,32 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
             .state('admin', {
                 url: "/admin",
                 controller: "adminController",
+                abstract: true,
+                template: '<ui-view/>',
+                data: {
+                    permission: ["admin"]
+                }
+            })
+
+            .state('admin.index', {
+                url: "/index",
                 templateUrl: "./app/Views/admin.html",
+                data: {
+                    permission: ["admin"]
+                }
+            })
+
+            .state('admin.studentLogin', {
+                url: "/createStudentLogin",
+                templateUrl: "./app/Views/createStudentLogin.html",
+                data: {
+                    permission: ["admin"]
+                }
+            })
+
+            .state('admin.teacherLogin', {
+                url: "/createTeacherLogin",
+                templateUrl: "./app/Views/createStudentLogin.html",
                 data: {
                     permission: ["admin"]
                 }

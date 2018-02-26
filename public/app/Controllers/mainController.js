@@ -42,8 +42,8 @@ peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state', '
             authentication.login($scope.profile).then(function (data) {
                 $scope.invalidLogin = false;
                 if(data.status == 200){
-                    console.log(data);
-                    $state.go(data.data.role);
+                    var stateName = data.data.role + ".index";    
+                    $state.go(stateName);
                 }
 
                 else{

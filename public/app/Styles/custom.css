@@ -8,3 +8,15 @@
     border-style: solid;
     border-width: thin;
 }
+
+.tile-block{
+    width: 125px;
+    height: 125px;
+    border-style: solid;
+    text-align: center;
+    margin: auto!important;
+    border-radius: 15px;
+    vertical-align: middle;
+    display: table-cell;
+    border-color: cadetblue;
+}

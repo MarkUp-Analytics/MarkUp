@@ -2,13 +2,18 @@
 
     <div ng-include src="'app/Views/homeHeader.html'"></div>
 
-    <div ng-controller="adminController">
-
-        <h4>Welcome {{userInfo.firstName + " " + userInfo.lastName}}!</h4>
-
-        <p>Loaded : {{teachersLoginFilePath}}</p>
-
-        <input type="file" id="upload_teachers_userinfo" file-model="teachersLoginFilePath" />
-        <a href="" class="btn btn-primary" ng-click="uploadFile()">Upload</a>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="tile-block pointer" ui-sref="admin.studentLogin">
+                Create Student login
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tile-block pointer" ui-sref="admin.teacherLogin">
+                Create Teacher login
+            </div>
+        </div>
+        <div class="col-md-3"></div>
     </div>
 </div>

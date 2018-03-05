@@ -3,20 +3,32 @@
 
   <div class="box-shadow" ng-controller="mainController">
 
-    <form name="signin" class="form-signin mx-auto text-center mt-5 pt-5">
-      <h2 class="mb-3 font-weight-normal">Please sign in</h2><br/><br/>
+    <form name="signin" class="form-signin mx-auto text-center mt-5 pt-5" novalidate>
+      <h2 class="mb-3 font-weight-normal">Please sign in</h2>
+      <br/>
+      <br/>
       <div ng-if="invalidLogin" class="mb-2 errorMsg alert alert-danger">Invalid User name/Password!</div>
+      <div ng-if="missingRequiredFields" class="mb-2 errorMsg alert alert-danger">All fields are required!</div>
       <div class="form-group">
-        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="schoolName" placeholder="School name"
-          ng-model="profile.schoolName" ng-change="invalidLogin = false;" required>
+        <ui-select id="schoolName" name="schoolName" class="width-100" ui-select-required ng-model="profile.school" theme="select2" title="Choose a school">
+          <ui-select-match placeholder="Select a school in the list...">{{$select.selected.schoolName}}</ui-select-match>
+          <ui-select-choices repeat="school in schoolList | filter: {schoolName: $select.search}">
+            <div ng-bind-html="school.schoolName | highlight: $select.search"></div>
+            <small>
+              Board: {{school.board}} Pincode:
+              <span ng-bind-html="''+school.pincode | highlight: $select.search"></span>
+            </small>
+          </ui-select-choices>
+        </ui-select>
+
       </div>
       <div class="form-group">
-        <input type="text" id="userName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.username"
-          placeholder="Username" ng-change="invalidLogin = false;" required>
+        <input type="text" id="userName" name="userName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.username"  ng-class="{'highlightError': signin.userName.$invalid && !signin.userName.$pristine}"
+          placeholder="Username" ng-change="invalidLogin = false; missingRequiredFields=false;" required>
       </div>
       <div class="form-group">
-        <input type="password" id="password" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.pwd"
-          placeholder="Password" ng-change="invalidLogin = false;" required>
+        <input type="password" id="password" name="password" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="profile.pwd"
+          placeholder="Password" ng-change="invalidLogin = false;  missingRequiredFields=false;" required>
       </div>
       <div class="checkbox mt-3">
         <label class="text-secondary pointer">

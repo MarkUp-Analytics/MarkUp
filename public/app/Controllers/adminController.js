@@ -22,8 +22,7 @@ peercentileApp.controller('adminController', ['$scope', '$location', 'authentica
                 return;
             }
 
-            fileUpload.upload($scope.filePath).then(function (data) {
-                console.log(data);
+            fileUpload.upload($scope.filePath, $scope.userInfo).then(function (data) {
                 if (data.status == 200) {
                     console.log("File Uploaded successfully");
                 }

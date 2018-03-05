@@ -3,6 +3,8 @@ var peercentileApp = angular.module('peercentileApp', [
     , 'ui.router'
     , 'ngStorage'
     , 'ngDialog'
+    , 'ui.select'
+    , 'ngSanitize'
 
 ]);
 
@@ -14,7 +16,6 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('home', {
                 url: "/home",
-
                 templateUrl: "./app/Views/home.html"
 
             })
@@ -59,16 +60,62 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: "./app/Views/menuPages/contact.html"
             })
 
-            .state('login', {
-                url: "/login",
-                templateUrl: "./app/Views/login.html"
+            .state('main', {
+                url: "/main",
+                controller: "mainController",
+                abstract: true,
+                template: '<ui-view/>',
             })
 
-            .state('manager-createUser', {
+            .state('main.login', {
+                url: "/login",
+                templateUrl: "./app/Views/login.html",
+                resolve: {
+                    schoolList: (schoolService) => schoolService.getSchoolList()
+                },
+                controller: function ($scope, schoolList) {
+                    $scope.schoolList = schoolList;
+                }
+            })
+
+            .state('main.createUser', {
                 url: "/createNewUser",
                 templateUrl: "./app/Views/newUser.html",
                 data: {// This is the permission array. This state can be accessed by users with manager role and admin role.
                     permission: ["manager", "admin"]
+                },
+                resolve: {
+                    schoolList: (schoolService) => schoolService.getSchoolList()
+                },
+                controller: function ($scope, schoolList) {
+                    $scope.schoolList = schoolList;
+                }
+
+            })
+
+            .state('manager', {
+                url: "/manager",
+                controller: "managerController",
+                abstract: true,
+                template: '<ui-view/>',
+                data: {
+                    permission: ["manager"]
+                }
+            })
+
+            .state('manager.index', {
+                url: "/index",
+                templateUrl: "./app/Views/manager.html",
+                data: {
+                    permission: ["manager"]
+                }
+            })
+
+            .state('manager.createSchool', {
+                url: "/createNewSchool",
+                templateUrl: "./app/Views/newSchool.html",
+                data: {// This is the permission array. This state can be accessed by users with manager role only.
+                      permission: ["manager"]
                 }
 
             })
@@ -124,7 +171,7 @@ peercentileApp.run(['$rootScope', '$state', '$stateParams', 'authentication',
                     $state.go('home');
                 }
             }
-            
+
             //If a user is already logged in, they cannot access login page
             else if (toState.name == 'login' && authentication.isAuthenticated()) {
                 event.preventDefault();

@@ -111,7 +111,7 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
                 }
             })
 
-            .state('manager.createSchool', {
+            .state('main.createSchool', {
                 url: "/createNewSchool",
                 templateUrl: "./app/Views/newSchool.html",
                 data: {// This is the permission array. This state can be accessed by users with manager role only.

@@ -1,7 +1,7 @@
 var user = require('../models/users');
 var school = require('../models/school');
 var crypto = require('crypto');
-var loggedInUserDetails = require('./loggedInUserDetails');
+//var loggedInUserDetails = require('./loggedInUserDetails');
 
 module.exports = function (app) {
 
@@ -93,9 +93,10 @@ module.exports = function (app) {
             }
             // If credentials are correct, return the user object
             else {
-                loggedInUserDetails.saveUserInfo(user, function(savedUser){ // To save the logged in user details for server purpose.
-                    response.send(user);
-                });
+                // loggedInUserDetails.saveUserInfo(user, function(savedUser){ // To save the logged in user details for server purpose.
+                //     response.send(user);
+                // });
+                response.send(user);
             }
         });
 

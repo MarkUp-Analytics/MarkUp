@@ -7,6 +7,8 @@ main {min-height: 50vh}
 .bg-fafafa {background: #FAFAFA}
 .bg-fdfdfd {background: #FDFDFD}
 .bg-ffffff {background: #FFFFFF}
+.bg-navbar-markup-logo-rectangle {background: url(../../images/markup_rectangle.png) center center; background-repeat: no-repeat; background-size: contain; height: 60px; width: 150px;}
+.bg-navbar-markup-logo-square {background: url(../../images/markup_square.png) center center; background-repeat: no-repeat; background-size: contain; height: 120px; width: 150px;}
 .bg-index-jumbotron {background: url(../../images/index-jumbotron.png) center center; background-repeat: no-repeat; background-size: cover;height: 600px;}
 .bg-study-smarter-not-harder {background: url(../../images/study-smarter-not-harder.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
 .bg-track-progress {background: url(../../images/track-progress.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}

@@ -1,14 +1,14 @@
 <div class="bg-fdfdfd d-flex flex-column flex-md-row align-items-center p-3 px-md-4" ng-controller="mainController">
   <div class="my-0 mr-md-auto">
-    <img src="images/markup_rectangle.png" class="pointer d-none d-md-block" width="175" ui-sref="home" />
-    <img src="images/markup_square.png" class="pointer d-md-none" height="100" ui-sref="home" />
+    <div class="bg-navbar-markup-logo-rectangle pointer d-none d-md-block" ui-sref="home"></div>
+    <div class="bg-navbar-markup-logo-square pointer d-md-none" ui-sref="home"></div>
   </div>
   <nav ng-if="$state.is('home') || $state.is('main.login')" class="my-2 my-md-0 mr-md-3">
     <a href="" class="p-2" ui-sref="about">About</a>
     <a href="" class="p-2" ui-sref="pricing">Pricing</a>
     <a href="" class="p-2" ui-sref="contact">Contact</a>
   </nav>
-  <a ng-if="!userInfo" class="btn btn-outline-primary pointer" ng-click="gotoLoginPage()">
+  <a ng-if="!userInfo" class="btn btn-outline-primary rounded-0 pointer" href="#" ng-click="gotoLoginPage()">
     Sign In
   </a>
   <div ng-if="userInfo">

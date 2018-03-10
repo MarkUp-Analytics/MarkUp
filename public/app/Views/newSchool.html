@@ -1,50 +1,47 @@
 <div class="container bg-fdfdfd px-0 pb-5">
 
-    <div ng-include src="'app/Views/homeHeader.html'"></div>
-  
-    <div class="box-shadow" ng-controller="managerController">
-      <form name="newSchoolForm" class="form-signin mx-auto text-center" novalidate>
-        <h3 class="form-signin-heading">Create a new School</h3>
-        <br/>
-        <div ng-if="schoolExists" class="mb-2 errorMsg alert alert-danger">{{applicationMessages.schoolExists}}</div>
-        <div ng-if="errorCreatingSchool" class="mb-2 errorMsg alert alert-danger">{{applicationMessages.errorCreatingSchool}}</div>
-        <div ng-if="missingRequiredFields" class="mb-2 errorMsg alert alert-danger">Required fields are missing!</div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="schoolName" name="schoolName" placeholder="School name" ng-model="newSchool.schoolName" required>
-        </div>
-        <div class="form-group">
-          <input type="text" id="streetAddress1" name="streetAddress1" class="form-control" ng-model="newSchool.addressLine1" placeholder="Street Address line 1" required>
-        </div>
-        <div class="form-group">
-            <input type="text" id="streetAddress2" class="form-control" ng-model="newSchool.addressLine2" placeholder="Street Address line 2">
-          </div>
-          <div class="form-group">
-            <input type="text" id="city" name="city" class="form-control" ng-model="newSchool.city" placeholder="City" required>
-          </div>
-          <div class="form-group">
-            <input type="text" id="state" name="state" class="form-control" ng-model="newSchool.state" placeholder="State" required>
-          </div>
-          <div class="form-group">
-            <input type="number" id="pincode" name="pincode" class="form-control" ng-model="newSchool.pincode" placeholder="Pincode" required>
-          </div>
-        <div class="form-group">
-          <select class="form-control" name="board" ng-model="newSchool.board" aria-placeholder="School Board" required>
-            <option value="" disabled selected>Select School Board</option>
-            <option value="cbse">CBSE</option>
-            <option value="icse">ICSE</option>
-            <option value="matriculation">Matriculation</option>
-            <option value="stateBoard">TN State Board</option>
-          </select>
-        </div>
-        <br/>
-        <div class="row">
-          <div class="col-sm-6">
-            <button class="btn btn-lg btn-danger btn-block rounded-0 pointer" ng-click="createSchool()" type="submit">Create School</button>
-          </div>
-          <div class="col-sm-6">
-          </div>
-        </div>
-  
-      </form>
-    </div>
+  <div ng-include src="'app/Views/homeHeader.html'"></div>
+
+  <div class="box-shadow" ng-controller="managerController">
+    <form name="newSchoolForm" class="form-signin mx-auto text-center mt-5 pt-5" novalidate>
+      <h3 class="form-signin-heading">Create new school</h3>
+      <br/>
+      <div ng-if="schoolExists" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.schoolExists}}</div>
+      <div ng-if="errorCreatingSchool" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.errorCreatingSchool}}</div>
+      <div ng-if="missingRequiredFields" class="mb-2 errorMsg alert alert-danger rounded-0">Required fields are missing!</div>
+      <br/>
+      <div class="form-group">
+        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="schoolName" name="schoolName" placeholder="School name" ng-model="newSchool.schoolName"
+          required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="streetAddress1" name="streetAddress1" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.addressLine1" placeholder="Street Address line 1"
+          required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="streetAddress2" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.addressLine2" placeholder="Street Address line 2">
+      </div>
+      <div class="form-group">
+        <input type="text" id="city" name="city" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.city" placeholder="City" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="state" name="state" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.state" placeholder="State" required>
+      </div>
+      <div class="form-group">
+        <input type="number" id="pincode" name="pincode" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.pincode" placeholder="Pincode"
+          required>
+      </div>
+      <div class="form-group">
+        <select class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" name="board" ng-model="newSchool.board" aria-placeholder="School Board" required>
+          <option value="" disabled selected>Select School Board</option>
+          <option value="cbse">CBSE</option>
+          <option value="icse">ICSE</option>
+          <option value="matriculation">Matriculation</option>
+          <option value="stateBoard">TN State Board</option>
+        </select>
+      </div>
+      <br/>
+      <button class="btn btn-outline-primary btn-block rounded-0 pointer" ng-click="createSchool()" type="submit">Create School</button>
+    </form>
   </div>
+</div>

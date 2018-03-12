@@ -6,9 +6,10 @@
     <form name="newSchoolForm" class="form-signin mx-auto text-center mt-5 pt-5" novalidate>
       <h3 class="form-signin-heading">Create new school</h3>
       <br/>
-      <div ng-if="schoolExists" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.schoolExists}}</div>
-      <div ng-if="errorCreatingSchool" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.errorCreatingSchool}}</div>
-      <div ng-if="missingRequiredFields" class="mb-2 errorMsg alert alert-danger rounded-0">Required fields are missing!</div>
+      <div ng-if="schoolExists" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('schoolExists')}}</div>
+      <div ng-if="errorCreatingSchool" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('errorCreatingSchool')}}</div>
+      <div ng-if="newSchoolForm.$submitted && newSchoolForm.$error.required" class="mb-2 errorMsg alert alert-danger rounded-0">Required fields are missing!</div>
+      <div ng-if="newSchoolForm.$submitted && (newSchoolForm.$error.inCorrectLength || newSchoolForm.$error.hasCharacters)" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('invalidPincode')}}</div>
       <br/>
       <div class="form-group">
         <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="schoolName" name="schoolName" placeholder="School name" ng-model="newSchool.schoolName"
@@ -28,8 +29,7 @@
         <input type="text" id="state" name="state" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.state" placeholder="State" required>
       </div>
       <div class="form-group">
-        <input type="number" id="pincode" name="pincode" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.pincode" placeholder="Pincode"
-          required>
+        <input type="text" id="pincode" name="pincode" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newSchool.pincode" placeholder="Pincode" required validate-pincode>
       </div>
       <div class="form-group">
         <select class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" name="board" ng-model="newSchool.board" aria-placeholder="School Board" required>
@@ -41,7 +41,16 @@
         </select>
       </div>
       <br/>
+      <button class="btn btn-sm btn-success" popover-template="'template.html'" popover-placement="left">Click</button>
       <button class="btn btn-outline-primary btn-block rounded-0 pointer" ng-click="createSchool()" type="submit">Create School</button>
     </form>
+   
   </div>
 </div>
+
+<script type="text/ng-template" id="template.html">
+  <div>
+    <p>Some text, some text, some text</p>
+    <button class="btn btn-sm">Update</button>
+  </div>
+</script>

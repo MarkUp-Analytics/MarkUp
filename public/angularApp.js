@@ -5,9 +5,9 @@ var peercentileApp = angular.module('peercentileApp', [
     , 'ngDialog'
     , 'ui.select'
     , 'ngSanitize'
-
+    ,'mgcrea.ngStrap'
+    
 ]);
-
 
 peercentileApp.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {

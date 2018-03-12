@@ -38,24 +38,27 @@ peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state', '
     };
 
     $scope.createUser = function () { // method to create a new user
-        authentication.createUser($scope.newUser).then(function (data) {
-            $scope.userNameExists = false;
-            $scope.errorCreatingUser = false;
-            if (data.status == 200) {
-                $state.go(data.data.role + '.index');
+        if($scope.newUserForm && $scope.newUserForm.$valid){//Call will be made to server only if the newUser form is valid
+                authentication.createUser($scope.newUser).then(function (data) {
+                    $scope.userNameExists = false;
+                    $scope.errorCreatingUser = false;
+                    if (data.status == 200) {
+                        $state.go(data.data.role + '.index');
+                    }
+        
+                    else if (data.status == 400) {
+                        if (data.data.msg == "user exists") {
+                            $scope.userNameExists = true;  //Flag to show error
+                        }
+        
+                        else if (data.data.msg == "error creating user") {
+                            $scope.errorCreatingUser = true; //Flag to show error
+                        }
+                    }
+        
+                });
             }
-
-            else if (data.status == 400) {
-                if (data.data.msg == "user exists") {
-                    $scope.userNameExists = true;  //Flag to show error
-                }
-
-                else if (data.data.msg == "error creating user") {
-                    $scope.errorCreatingUser = true; //Flag to show error
-                }
-            }
-
-        });
+        
     };
 
     $scope.checkAuthentication = function () { //Method to login

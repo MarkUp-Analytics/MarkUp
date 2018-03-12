@@ -2,9 +2,9 @@
 
 peercentileApp.controller('managerController', ['$scope', 'managerService', 'applicationMessages', 'customDialog', function ($scope, managerService, applicationMessages, customDialog) {
 
+    $scope.applicationMessages = applicationMessages;
     $scope.schoolExists = false;
     $scope.errorCreatingSchool = false;
-    $scope.missingRequiredFields = false;
 
     $scope.createSchool = function(){ // method to create a new school
         
@@ -28,13 +28,6 @@ peercentileApp.controller('managerController', ['$scope', 'managerService', 'app
                 
             });
         }
-
-        else{
-            if($scope.newSchoolForm.schoolName.$invalid || $scope.newSchoolForm.board.$invalid || $scope.newSchoolForm.pincode.$invalid){
-                $scope.missingRequiredFields = true;
-            }
-        }
-        
     };
 
 }])

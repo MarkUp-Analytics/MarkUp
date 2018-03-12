@@ -3,22 +3,31 @@
   <div ng-include src="'app/Views/homeHeader.html'"></div>
 
   <div class="box-shadow" ng-controller="mainController">
-    <form name="newUserForm" class="form-signin mx-auto text-center mt-5 pt-5">
+    <form name="newUserForm" class="form-signin mx-auto text-center mt-5 pt-5" novalidate>
       <h3 class="form-signin-heading">Create your Markup Account</h3>
       <br/>
+      <div ng-if="schoolExists" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('userNameExists')}}</div>
+      <div ng-if="errorCreatingUser" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('errorCreatingUser')}}</div>
+      <div ng-if="newUserForm.$submitted && (newUserForm.$error.required || newUserForm.$error.uiSelectRequired)" class="mb-2 errorMsg alert alert-danger rounded-0">Required fields are missing!</div>
+      <div ng-if="newUserForm.$submitted && (newUserForm.$error.inCorrectLength
+      || newUserForm.$error.noNumber || newUserForm.$error.noSpecialCharacter)" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('invalidPassword')}}</div>
+      <div ng-if="newUserForm.$submitted && newUserForm.$error.passwordVerify" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('passwordMismatch')}}</div>
       <div class="form-group">
-        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="firstName" placeholder="First name" ng-model="newUser.firstName" required>
+        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="firstName" name="firstName"
+          placeholder="First name" ng-model="newUser.firstName" required>
       </div>
       <div class="form-group">
-        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="lastName" placeholder="Last name" ng-model="newUser.lastName" required>
-      </div>      
+        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="lastName" name="lastName"
+          placeholder="Last name" ng-model="newUser.lastName" required>
+      </div>
       <div class="form-group">
-        <ui-select id="schoolName" name="schoolName" class="width-100" ui-select-required ng-model="newUser.schoolID" theme="select2" title="Choose a school">
-          <ui-select-match placeholder="Select a school in the list...">{{$select.selected.schoolName}}</ui-select-match>
+        <ui-select id="schoolName" name="schoolName" class="width-100" ui-select-required ng-model="newUser.schoolID" theme="select2"
+          title="Choose a school">
+          <ui-select-match placeholder="Select a school in the list...">{{$select.selected.schoolName + ", " + $select.selected.city + " - " + $select.selected.pincode}}</ui-select-match>
           <ui-select-choices repeat="school._id as school in schoolList | filter: {schoolName: $select.search}">
             <div ng-bind-html="school.schoolName | highlight: $select.search"></div>
             <small>
-              Board: {{school.board}} Pincode:
+              Board: {{school.board + " "}} | City: {{school.city + " "}} | Pincode:
               <span ng-bind-html="''+school.pincode | highlight: $select.search"></span>
             </small>
           </ui-select-choices>
@@ -26,19 +35,22 @@
 
       </div>
       <div class="form-group">
-        <input type="text" id="userName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-class="userNameExists?'highlightError':''" ng-model="newUser.username"
-          ng-change="userNameExists = false; errorCreatingUser = false" placeholder="Username" required>
-        <div ng-if="userNameExists" class="mt-2 errorMsg">User name already exists!</div>
-        <div ng-if="errorCreatingUser" class="mt-2 errorMsg">Error creating user!</div>
+        <input type="text" id="userName" name="userName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0"
+          ng-model="newUser.username" ng-change="userNameExists = false; errorCreatingUser = false" placeholder="Username"
+          required>
       </div>
       <div class="form-group">
-        <input type="password" id="password" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newUser.pwd" placeholder="Password" required>
+        <input type="password" id="password" name="password" title="Password Validation" data-content="Testing" data-template-url="passwordValidation.html"
+          bs-popover trigger="focus" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" validate-password password-verify="{{newUser.confirmPwd}}"
+          ng-model="newUser.pwd" placeholder="Password" required>
       </div>
       <div class="form-group">
-        <input type="password" id="repeatPassword" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newUser.pwd" placeholder="Confirm Password" required>
+        <input type="password" id="repeatPassword" name="repeatPassword" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0"
+          ng-model="newUser.confirmPwd" placeholder="Confirm Password" password-verify="{{newUser.pwd}}" required>
       </div>
       <div class="form-group">
-        <select class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newUser.role" aria-placeholder="Role">
+        <select class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newUser.role" name="role"
+          aria-placeholder="Role" required>
           <option value="" disabled selected>Select your role</option>
           <option value="admin">Admin</option>
           <option value="teacher">Teacher</option>
@@ -51,3 +63,40 @@
     </form>
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+  });
+</script>
+<script type="text/ng-template" id="passwordValidation.html">
+  <div class="popover" tabindex="-1" ng-show="content">
+      <div class="arrow"></div>
+      <h5 class="popover-title pwdPopoverHeader" ng-bind-html="title" ng-show="title"></h5>
+      <div class="popover-content">
+            <div class="row m-1">
+              <div class="col-md-1 ml-0 pl-1 pr-0">
+                <i ng-class="(newUserForm.password.$dirty && !newUserForm.$error.inCorrectLength)?'fa fa-check':'fa fa-times'"></i>
+              </div>
+              <div class="col-md-11 pl-0">
+              Password length must be at least 6 characters.
+              </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-1 ml-0 pl-1 pr-0">
+                  <i ng-class="(newUserForm.password.$dirty && !newUserForm.$error.noNumber)?'fa fa-check':'fa fa-times'"></i>
+                </div>
+                <div class="col-md-11 pl-0">
+                  Password must contain at least one number.
+                </div>
+            </div>
+            <div class="row m-1">
+                  <div class="col-md-1 ml-0 pl-1 pr-0">
+                    <i ng-class="(newUserForm.password.$dirty && !newUserForm.$error.noSpecialCharacter)?'fa fa-check':'fa fa-times'"></i>
+                  </div>
+                  <div class="col-md-11 pl-0">
+                      Password must contain at least one symbol in this list !@#$%^&*()=+_- or a space.
+                  </div>
+            </div>
+      </div>
+  </div>
+</script>

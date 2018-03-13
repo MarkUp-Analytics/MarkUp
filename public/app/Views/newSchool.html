@@ -34,14 +34,13 @@
       <div class="form-group">
         <select class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" name="board" ng-model="newSchool.board" aria-placeholder="School Board" required>
           <option value="" disabled selected>Select School Board</option>
-          <option value="cbse">CBSE</option>
-          <option value="icse">ICSE</option>
-          <option value="matriculation">Matriculation</option>
-          <option value="stateBoard">TN State Board</option>
+          <option value="CBSE">CBSE</option>
+          <option value="ICSE">ICSE</option>
+          <option value="Matriculation">Matriculation</option>
+          <option value="TN State Board">TN State Board</option>
         </select>
       </div>
       <br/>
-      <button class="btn btn-sm btn-success" popover-template="'template.html'" popover-placement="left">Click</button>
       <button class="btn btn-outline-primary btn-block rounded-0 pointer" ng-click="createSchool()" type="submit">Create School</button>
     </form>
    

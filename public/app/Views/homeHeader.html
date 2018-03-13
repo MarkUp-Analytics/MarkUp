@@ -8,7 +8,7 @@
     <a href="" class="p-2" ui-sref="pricing">Pricing</a>
     <a href="" class="p-2" ui-sref="contact">Contact</a>
   </nav>
-  <a ng-if="!userInfo" class="btn btn-outline-primary rounded-0 pointer" href="#" ng-click="gotoLoginPage()">
+  <a ng-if="!userInfo" class="btn btn-outline-primary rounded-0 pointer" href="#" ui-sref="main.login">
     Sign In
   </a>
   <div ng-if="userInfo">

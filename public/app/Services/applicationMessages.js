@@ -18,7 +18,7 @@ function(){
     customMessages.schoolCreated = "A new school is successfully created!";
     customMessages.invalidPincode = "Pincode is invalid!";
     customMessages.invalidPassword = "Password is not valid!";
-    customMessages.passwordMismatch = "Password didnot match!"
+    customMessages.passwordMismatch = "Password didnot match!";
     
     
     this.getMessage = function(property){ //Method to get custom message

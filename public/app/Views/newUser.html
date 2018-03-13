@@ -11,7 +11,7 @@
       <div ng-if="newUserForm.$submitted && (newUserForm.$error.required || newUserForm.$error.uiSelectRequired)" class="mb-2 errorMsg alert alert-danger rounded-0">Required fields are missing!</div>
       <div ng-if="newUserForm.$submitted && (newUserForm.$error.inCorrectLength
       || newUserForm.$error.noNumber || newUserForm.$error.noSpecialCharacter)" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('invalidPassword')}}</div>
-      <div ng-if="newUserForm.$submitted && newUserForm.$error.passwordVerify" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('passwordMismatch')}}</div>
+      <div ng-if="newUserForm.$submitted && newUserForm.$error.passwordMismatch" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('passwordMismatch')}}</div>
       <div class="form-group">
         <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="firstName" name="firstName"
           placeholder="First name" ng-model="newUser.firstName" required>
@@ -41,8 +41,7 @@
       </div>
       <div class="form-group">
         <input type="password" id="password" name="password" title="Password Validation" data-content="Testing" data-template-url="passwordValidation.html"
-          bs-popover trigger="focus" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" validate-password password-verify="{{newUser.confirmPwd}}"
-          ng-model="newUser.pwd" placeholder="Password" required>
+          bs-popover trigger="focus" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" validate-password ng-model="newUser.pwd" placeholder="Password" required>
       </div>
       <div class="form-group">
         <input type="password" id="repeatPassword" name="repeatPassword" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0"

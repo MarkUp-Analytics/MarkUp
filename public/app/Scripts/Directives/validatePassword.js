@@ -46,12 +46,12 @@ peercentileApp.directive('passwordVerify', function(){
         link: function(scope, elem, attrs, ngModel) {
           if (!ngModel) return; // do nothing if no ng-model
   
-          // watch own value and re-validate on change
-          scope.$watch(attrs.ngModel, function() {
+          // watch confirm password value and re-validate on change
+          scope.$watch(attrs.ngModel, function(newVal, oldVal) {
             validate();
           });
   
-          // observe the other value and re-validate on change
+          // observe the original password value and re-validate on change
           attrs.$observe('passwordVerify', function(val) {
             validate();
           });
@@ -60,9 +60,14 @@ peercentileApp.directive('passwordVerify', function(){
             // values
             var val1 = ngModel.$viewValue;
             var val2 = attrs.passwordVerify;
+
+            if(!val1 || !val2){ //Original password will be null until it meets password validation
+                ngModel.$setValidity('passwordMismatch', true);
+            }
+            else{
+                ngModel.$setValidity('passwordMismatch', val1 === val2);
+            }
   
-            // set validity
-            ngModel.$setValidity('passwordVerify', val1 === val2);
           };
         }
     }

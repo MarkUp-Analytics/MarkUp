@@ -70,12 +70,19 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
             .state('main.login', {
                 url: "/login",
                 templateUrl: "./app/Views/login.html",
-                resolve: {
-                    schoolList: (schoolService) => schoolService.getSchoolList()
+                resolve:{
+                    schoolList: function(schoolService, $q){
+                        var deferred = $q.defer();
+                        return schoolService.getSchoolList().then(function(schoolList){
+                            deferred.resolve(schoolList);
+                            return deferred.promise;
+                        }, function(err){
+                            deferred.reject(err);
+                            return deferred.promise;
+                        });
+                    }
                 },
-                controller: function ($scope, schoolList) {
-                    $scope.schoolList = schoolList;
-                }
+                controller: "loginController"
             })
 
             .state('main.createUser', {
@@ -173,7 +180,7 @@ peercentileApp.run(['$rootScope', '$state', '$stateParams', 'authentication',
             }
 
             //If a user is already logged in, they cannot access login page
-            else if (toState.name == 'login' && authentication.isAuthenticated()) {
+            else if (toState.name == 'main.login' && authentication.isAuthenticated()) {
                 event.preventDefault();
                 $state.go(authentication.getRole());
             }

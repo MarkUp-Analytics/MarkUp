@@ -1,6 +1,6 @@
 'use strict';
 
-peercentileApp.controller('adminController', ['$scope', '$location', 'authentication', 'fileUpload', 'applicationMessages', 'customDialog',
+peercentileApp.controller('adminController', ['$scope', '$location', 'authentication', 'fileUpload', 'applicationMessages', 'customDialog', 
     function ($scope, $location, authentication, fileUpload, applicationMessages, customDialog) {
 
         $scope.userInfo = authentication.getUserInfo();
@@ -21,13 +21,20 @@ peercentileApp.controller('adminController', ['$scope', '$location', 'authentica
                 customDialog.errorDialog(applicationMessages.getMessage('wrongFileExtension'));
                 return;
             }
-
+            var loadingDialog = customDialog.loadingDialog();
             fileUpload.upload($scope.filePath, $scope.userInfo).then(function (data) {
+
                 if (data.status == 200) {
-                    console.log("File Uploaded successfully");
+                    customDialog.successDialog(applicationMessages.getMessage('fileUploaded'));
+                }
+
+                else{
+                    customDialog.errorDialog(data.data.msg);
                 }
             }, function(errResponse){
                 customDialog.errorDialog(errResponse.data.msg);
+            }).finally(function(){
+                loadingDialog.close();
             });
 
 

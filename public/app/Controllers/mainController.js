@@ -22,6 +22,8 @@ peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state', '
 
     $scope.createUser = function () { // method to create a new user
         if($scope.newUserForm && $scope.newUserForm.$valid){//Call will be made to server only if the newUser form is valid
+            var loadingDialog = customDialog.loadingDialog(); //To show loading icon until the user is created
+
                 authentication.createUser($scope.newUser).then(function (data) {
                     $scope.userNameExists = false;
                     $scope.errorCreatingUser = false;
@@ -40,6 +42,11 @@ peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state', '
                         }
                     }
         
+                }, function(error){
+                    customDialog.errorDialog(error);
+                }).finally(function(){
+                    loadingDialog.close();
+
                 });
             }
         

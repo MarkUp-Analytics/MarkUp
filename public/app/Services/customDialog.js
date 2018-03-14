@@ -23,4 +23,13 @@ peercentileApp.service('customDialog', ['ngDialog', '$sce',
                 }
             });
         }
+
+        this.loadingDialog = function(){
+            return ngDialog.open({
+                template: '<div style="margin:auto;" class="loader"></div><div class="text-lg-center">Loading....</div>',
+                showClose: false,
+                plain: true
+            });
+
+        }
     }]);

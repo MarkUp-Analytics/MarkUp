@@ -9,6 +9,8 @@ peercentileApp.controller('managerController', ['$scope', 'managerService', 'app
     $scope.createSchool = function(){ // method to create a new school
         
         if($scope.newSchoolForm && $scope.newSchoolForm.$valid){//Call will be made to server only if the newSchool form is valid
+            var loadingDialog = customDialog.loadingDialog(); //To show loading icon until the school is created
+
             managerService.createSchool($scope.newSchool).then(function(data){
                 $scope.schoolExists = false;
                 $scope.errorCreatingSchool = false;
@@ -26,6 +28,10 @@ peercentileApp.controller('managerController', ['$scope', 'managerService', 'app
                     }
                 }
                 
+            }, function(error){
+                customDialog.errorDialog(error);
+            }).finally(function(){
+                loadingDialog.close();
             });
         }
     };

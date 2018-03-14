@@ -19,6 +19,7 @@ function(){
     customMessages.invalidPincode = "Pincode is invalid!";
     customMessages.invalidPassword = "Password is not valid!";
     customMessages.passwordMismatch = "Password didnot match!";
+    customMessages.fileUploaded = "File successfully uploaded!";
     
     
     this.getMessage = function(property){ //Method to get custom message

@@ -3,6 +3,7 @@ var path = require('path');
 
 var readCSV = require('./readCSVFileController');
 var convertToCSV = require('./convertExcelToCSV');
+var createUserLogin = require('./createUserLogin');
 
 
 module.exports = function(app){
@@ -19,7 +20,7 @@ module.exports = function(app){
 		storage: storage
     }).single('file');
     
-    var fileIsReadyToBeProcessed = function(file, callback){
+    var fileIsReadyToBeProcessed = function(file, role, callback){
         
         var fileType = file.mimetype.toString().toLowerCase();
         var fileExt = file.originalname.split('.').pop().toLowerCase();
@@ -31,7 +32,7 @@ module.exports = function(app){
             callback(result);
         }
         else if(fileType == "application/vnd.ms-excel" &&  fileExt == "csv"){ 
-            readCSV.validateCSV(file.path, "student", function(result){// To validate csv file. It checks for the number of columns matches the pre defined array of columns
+            readCSV.validateCSV(file.path, role, function(result){// To validate csv file. It checks for the number of columns matches the pre defined array of columns
                 if(result.status == "failure"){
                     callback(result);
                 }
@@ -65,18 +66,41 @@ module.exports = function(app){
     app.post('/api/upload', upload, function (req, res, next) {
         var fileReport = {};
         if(req.file){
-            fileIsReadyToBeProcessed(req.file, function(fileReport){
+            fileIsReadyToBeProcessed(req.file, req.body.uploadedUserRole, function(fileReport){
                 if(!req.body.userInfo){
                     res.status(400).json({msg:"Unable to access user info"});
                 }
                 if(fileReport.status == "success"){
                     var loggedInUserInfo = JSON.parse(req.body.userInfo);
 
-                    // createUserLogin(fileReport.filePath, function(){// If the csv file is validated and has no error, we can create user login.
+                    var userRole = req.body.uploadedUserRole;
 
-                    // });
-                    //readCSV(req.file.path);
-                    res.send("Success");
+                    // If the csv file is validated and has no error, we can create user login.
+                    if(userRole == 'student'){
+                        var batchYear = req.body.batchYear;
+                        createUserLogin.student(fileReport.filePath, loggedInUserInfo, batchYear, function(err, result){
+                            if(err){
+                                res.status(400).json({msg: err.msg});
+                            }
+
+                            else{
+                                res.send({msg:result.msg});
+                            }
+                        });
+                    }
+
+                    else if(userRole == 'teacher'){
+                        createUserLogin.teacher(fileReport.filePath, loggedInUserInfo, function(err, result){
+                            if(err){
+                                res.status(400).json({msg: err.msg});
+                            }
+
+                            else{
+                                res.send({msg:result.msg});
+                            }
+                        });
+                    }
+
                 }
     
                 else{

@@ -7,7 +7,8 @@ module.exports = function (app) {
             $and: [
                 { schoolName: request.body.schoolName },
                 { board: request.body.board },
-                {pincode: request.body.pincode}
+                {pincode: request.body.pincode},
+                {recordStatusFlag: 'Active'}
             ]
         }).exec(function (err, schoolFromDB) {
             if (err) { throw err; }
@@ -25,6 +26,9 @@ module.exports = function (app) {
                 newSchool.state = request.body.state;
                 newSchool.pincode = request.body.pincode;
                 newSchool.board = request.body.board;
+                newSchool.recordStatusFlag = "Active";
+                newSchool.recordCreatedDate = new Date();
+                newSchool.recordLastModified = new Date();
 
                 school.create(newSchool, function (err, result) {
                     if (err) {

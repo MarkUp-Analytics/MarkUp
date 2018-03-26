@@ -12,7 +12,10 @@ var userSchema = new schema({
     schoolID: {type: schema.Types.ObjectId, ref: 'school'},
     salt: String,
     hash: String,
-    role: String
+    role: String,
+    recordStatusFlag: String,
+    recordCreatedDate: Date,
+    recordLastModified: Date
 }, { collection : 'Users' });
 
 userSchema.methods.setPassword = function(password){ //Encrypting the pwd before sending it to MongoD

@@ -16,6 +16,8 @@ var mongoose = require('mongoose');
 
 var setUpController = require('./controllers/setupController');
 var schoolController = require('./controllers/schoolController');
+var teacherController = require('./controllers/teacherController');
+var studentController = require('./controllers/studentController');
 var fileUploadController = require('./controllers/fileUploadController');
 
 var port = process.env.port || 3000;
@@ -28,5 +30,7 @@ mongoose.connect(config.getDBConnectionString());
 setUpController(app);
 schoolController(app);
 fileUploadController(app);
+teacherController(app);
+studentController(app);
 
 app.listen(port);

@@ -6,7 +6,7 @@
         <div class="row mx-0 p-3 px-md-5">
             <div class="col-md">
                 <figure class="figure">
-                    <img src="images/students-spreadsheet-sample.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                    <img src="images/students-spreadsheet-sample-2.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
                     <figcaption class="figure-caption text-center">Sample file for students</figcaption>
                     <hr class="d-block d-md-none border border-top-0" />
                 </figure>
@@ -35,17 +35,21 @@
                                 <br/> Column C: Kannusami
                                 <br/> Column D: 6
                                 <br/> Column E: F
-                                <br/>Column F: 23/09/1989
+                                <br/> Column F: 23/09/1989
                                 <br/>
                             </p>
                         </span>
                     </label>
-                    <!-- <div ng-if="noFileFound" class="errorMsg">Please select a file to upload!</div> -->
+                    </div>
+                    <div class="form-group">
+                        <label style="float:left;" class="mr-3 mt-2">Anticipated graduation year: </label>
+                        <select class="form-control" style="width:100px;" ng-model="batch" ng-options="year for year in yearArr" required></select>
+                    </div>
+                   
                     <div ng-if="noFileFound" class="errorMsg">{{applicationMessages.getMessage('noFileFound')}}</div>
                     <div ng-if="wrongFileExtension" class="errorMsg">{{applicationMessages.getMessage('wrongFileExtension')}}</div>
 
                     <input type="file" id="upload_teachers_userinfo" file-model ng-model="filePath" />
-                </div>
             </form>
         </div>
 
@@ -53,7 +57,7 @@
 
         <div class="row mx-0 p-3 pb-5 px-md-5">
             <div class="col-md text-right">
-                <button type="button" class="btn btn-primary" ng-click="uploadFile()">Upload</button>
+                <button type="button" class="btn btn-primary" ng-click="uploadFile('student')">Upload</button>
                 <button type="button" class="btn btn-secondary" ng-click="filePath=null;">Cancel</button>
             </div>
         </div>

@@ -1,0 +1,45 @@
+<div class="container bg-fdfdfd px-0 pb-5">
+
+    <div ng-include src="'app/Views/homeHeader.html'"></div>
+
+    <div class="row m-4">
+        <div class="col-md-12">
+            <h3>TEACHERS LIST</h3>
+            <div ng-if="!teachersArr || teachersArr.length == 0">
+                No teachers available!
+            </div>
+            <div ng-if="teachersArr.length > 0">
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Employee No
+                            </th>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Last Name
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="teacher in teachersArr track by $index">
+                            <td>
+                                {{teacher.userID.username}}
+                            </td>
+                            <td>
+                                {{teacher.firstName}}
+                            </td>
+                            <td>
+                                {{teacher.lastName}}
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

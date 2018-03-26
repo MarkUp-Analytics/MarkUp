@@ -9,7 +9,8 @@ module.exports = function (app) {
         user.findOne({
             $and: [
                 { username: request.body.username },
-                { schoolID: request.body.schoolID }
+                { schoolID: request.body.schoolID },
+                { recordStatusFlag: 'Active'}
             ]
         }).exec(function (err, userFromDB) {
             if (err) { throw err; }
@@ -27,6 +28,9 @@ module.exports = function (app) {
                 newUser.role = request.body.role;
                 newUser.salt = crypto.randomBytes(16).toString('hex');
                 newUser.hash = crypto.pbkdf2Sync(request.body.pwd, newUser.salt, 1000, 64, 'sha512').toString('hex');
+                newUser.recordStatusFlag = "Active";
+                newUser.recordCreatedDate = new Date();
+                newUser.recordLastModified = new Date();
 
                 user.create(newUser, function (err, result) {
                     if (err) {
@@ -39,49 +43,15 @@ module.exports = function (app) {
 
     });
 
-    // app.post('/api/createSchool', function (request, response) { //API to create new school. This is available only to user with Manager role. (only Markup employees)
-        
-    //     school.findOne({ //Two schools with same name, board and pincode cannot exist. There can be 2 Mahatma school which are state board but they have to be in different cities/pincode.
-    //         $and: [
-    //             { schoolName: request.body.schoolName },
-    //             { board: request.body.board },
-    //             {pincode: request.body.pincode}
-    //         ]
-    //     }).exec(function (err, school) {
-    //         if (err) { throw err; }
-
-    //         else if (school) {
-    //             response.status(400).json({msg: "school name exists"});
-    //         }
-
-    //         else {           // If there are no school found in DB then create an account
-    //             var newSchool = {};
-    //             newSchool.schoolName = request.body.schoolName;
-    //             newSchool.address1 = request.body.address1;
-    //             newSchool.address2 = request.body.address2;
-    //             newSchool.city = request.body.city;
-    //             newSchool.state = request.body.state;
-    //             newSchool.pincode = request.body.pincode;
-    //             newSchool.board = request.body.board;
-
-    //             school.create(newSchool, function (err, result) {
-    //                 if (err) {
-    //                     response.status(400).json({msg: "error creating school"});
-    //                 }
-    //                 response.send(result);
-    //             });
-    //         }
-    //     });
-
-    // });
 
     app.post('/api/login', function (request, response) {
         user.findOne({//Query matches for both username and school ID
             $and: [
                 { username: request.body.username },
-                { schoolID: request.body.school._id }
+                { schoolID: request.body.school._id },
+                {recordStatusFlag: 'Active'}
             ]
-        }).exec(function (err, user) {
+        }).select('-recordCreatedDate -recordLastModified -recordStatusFlag -__v').exec(function (err, user) {
             if (err) { throw err; }
             // Return if user not found in database
             else if (!user) {
@@ -93,10 +63,14 @@ module.exports = function (app) {
             }
             // If credentials are correct, return the user object
             else {
-                // loggedInUserDetails.saveUserInfo(user, function(savedUser){ // To save the logged in user details for server purpose.
-                //     response.send(user);
-                // });
-                response.send(user);
+                var requiredInfo = {};
+                requiredInfo.username = user.username;
+                requiredInfo.firstName = user.firstName;
+                requiredInfo.lastName = user.lastName;
+                requiredInfo.schoolID = user.schoolID;
+                requiredInfo.role = user.role;
+                requiredInfo._id = user._id;
+                response.send(requiredInfo);
             }
         });
 

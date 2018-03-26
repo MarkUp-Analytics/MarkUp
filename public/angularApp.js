@@ -6,6 +6,7 @@ var peercentileApp = angular.module('peercentileApp', [
     , 'ui.select'
     , 'ngSanitize'
     ,'mgcrea.ngStrap'
+    ,'datatables'
     
 ]);
 
@@ -155,9 +156,111 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
 
             .state('admin.teacherLogin', {
                 url: "/createTeacherLogin",
-                templateUrl: "./app/Views/createStudentLogin.html",
+                templateUrl: "./app/Views/createTeacherLogin.html",
                 data: {
                     permission: ["admin"]
+                }
+            })
+
+            .state('admin.viewAllStudents', {
+                url: "/viewAllStudents/:schoolID",
+                templateUrl: "./app/Views/viewAllStudents.html",
+                data: {
+                    permission: ["admin"]
+                },
+                params:{
+                    schoolID:null
+                },
+                controller:function($scope, $stateParams, studentService, customDialog){
+                    console.log($stateParams.schoolID);
+                    var loadingDialog = customDialog.loadingDialog();
+                    studentService.getAllStudents({schoolID: $stateParams.schoolID}).then(function(result){
+                        $scope.studentArr = result;
+                    }, function(){}).finally(function(){
+                        loadingDialog.close();
+                    });
+                }
+            })
+
+            .state('admin.viewAllTeachers', {
+                url: "/viewAllTeachers/:schoolID",
+                templateUrl: "./app/Views/viewAllTeachers.html",
+                data: {
+                    permission: ["admin"]
+                },
+                params:{
+                    schoolID:null
+                },
+                controller:function($scope, $stateParams, teacherService, customDialog){
+                    console.log($stateParams.schoolID);
+                    var loadingDialog = customDialog.loadingDialog();
+                    teacherService.getAllTeachers({schoolID: $stateParams.schoolID}).then(function(result){
+                        $scope.teachersArr = result;
+                    }, function(){}).finally(function(){
+                        loadingDialog.close();
+                    });
+                }
+            })
+
+            .state('teacher', {
+                url: "/teacher",
+                controller: "teacherController",
+                abstract: true,
+                template: '<ui-view/>',
+                data: {
+                    permission: ["teacher"]
+                }
+            })
+
+            .state('teacher.index', {
+                url: "/index",
+                templateUrl: "./app/Views/teacher.html",
+                data: {
+                    permission: ["teacher"]
+                },
+                resolve:{
+                    teacherInfo: function(authentication, teacherService){
+                        var userInfo = authentication.getUserInfo();
+                        var teacherDetails = {};
+                        teacherDetails.firstName = userInfo.firstName;
+                        teacherDetails.lastName = userInfo.lastName;
+                        teacherDetails.userID = userInfo._id;
+                        return teacherService.getTeacherInfo(teacherDetails);
+                    }
+                },
+                controller: function ($scope, teacherInfo) {
+                    $scope.teacherDetails = teacherInfo;
+                }
+            })
+
+            .state('student', {
+                url: "/student",
+                controller: "studentController",
+                abstract: true,
+                template: '<ui-view/>',
+                data: {
+                    permission: ["student"]
+                }
+            })
+
+            .state('student.index', {
+                url: "/index",
+                templateUrl: "./app/Views/student.html",
+                data: {
+                    permission: ["student"]
+                },
+                resolve:{
+                    studentInfo: function(authentication, studentService){
+                        var userInfo = authentication.getUserInfo();
+                        var studentDetails = {};
+                        studentDetails.firstName = userInfo.firstName;
+                        studentDetails.lastName = userInfo.lastName;
+                        studentDetails.userID = userInfo._id;
+                        return studentService.getStudentInfo(studentDetails);
+                    }
+                },
+                controller: function ($scope, studentInfo) {
+                    $scope.studentDetails = studentInfo;
                 }
             })
     }]);
@@ -180,9 +283,9 @@ peercentileApp.run(['$rootScope', '$state', '$stateParams', 'authentication',
             }
 
             //If a user is already logged in, they cannot access login page
-            else if (toState.name == 'main.login' && authentication.isAuthenticated()) {
+            else if ((toState.name == 'main.login' || toState.name == 'home') && authentication.isAuthenticated()) {
                 event.preventDefault();
-                $state.go(authentication.getRole());
+                $state.go(authentication.getRole() + '.index');
             }
 
         });

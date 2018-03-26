@@ -10,6 +10,9 @@ var schoolSchema = new schema({
     , state:String
     , pincode:String
     , board: String
+    , recordStatusFlag: String
+    , recordCreatedDate: Date
+    , recordLastModified: Date
 }, { collection : 'Schools' });
 
 

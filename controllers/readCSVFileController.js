@@ -10,7 +10,7 @@ csvProcess.validateCSV = function(filePath, role, callback){
         expectedHeaders = ["rollNo", "firstName", "lastName", "class", "section", "DOB"]; //Student csv file
     }
     else{
-        expectedHeaders = ["teacherID", "firstName", "lastName", "subject", "DOB"]; //teacher csv file
+        expectedHeaders = ["teacherID", "firstName", "lastName", "DOB"]; //teacher csv file
     }
 
     csv.fromPath(filePath)

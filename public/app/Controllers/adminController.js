@@ -1,14 +1,19 @@
 'use strict';
 
-peercentileApp.controller('adminController', ['$scope', '$location', 'authentication', 'fileUpload', 'applicationMessages', 'customDialog', 
+peercentileApp.controller('adminController', ['$scope','$location', 'authentication', 'fileUpload', 'applicationMessages', 'customDialog', 
     function ($scope, $location, authentication, fileUpload, applicationMessages, customDialog) {
 
         $scope.userInfo = authentication.getUserInfo();
         $scope.applicationMessages = applicationMessages;
         $scope.noFileFound = false;
         $scope.wrongFileExtension = false;
+        $scope.today = new Date();
+        $scope.yearArr = [];
+        for(var i=0; i<5; i++){
+            $scope.yearArr.push(($scope.today.getFullYear() + i).toString());
+        }
 
-        $scope.uploadFile = function () {
+        $scope.uploadFile = function (role) {
             $scope.noFileFound = false;
             $scope.wrongFileExtension = false;
 
@@ -22,10 +27,10 @@ peercentileApp.controller('adminController', ['$scope', '$location', 'authentica
                 return;
             }
             var loadingDialog = customDialog.loadingDialog();
-            fileUpload.upload($scope.filePath, $scope.userInfo).then(function (data) {
+            fileUpload.upload($scope.filePath, $scope.userInfo, role, $scope.batch).then(function (data) {
 
                 if (data.status == 200) {
-                    customDialog.successDialog(applicationMessages.getMessage('fileUploaded'));
+                    customDialog.successDialog(applicationMessages.getMessage('fileUploaded') + "\n" + data.data.msg);
                 }
 
                 else{

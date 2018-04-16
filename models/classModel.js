@@ -7,6 +7,7 @@ var classSchema = new schema({
     , section: String
     , batchYear: String
     , schoolID: {type: schema.Types.ObjectId, ref: 'school'}
+    , subjects: Object
     , recordStatusFlag: String
     , recordCreatedDate: Date
     , recordLastModified: Date

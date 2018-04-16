@@ -8,15 +8,19 @@ peercentileApp.service('customDialog', ['ngDialog', '$sce',
 
         this.errorDialog = function (msg) { //Method to get custom message
             ngDialog.open({
+                closeByEscape: false,
+                closeByDocument : false,
                 templateUrl: './app/Views/templates/errorDialog-tpl.html',
                 data: {
-                    msg: $sce.trustAsHtml(msg)
+                    msg: $sce.trustAsHtml(msg),
                 }
             });
         }
 
         this.successDialog = function (msg) { //Method to get custom message
             ngDialog.open({
+                closeByEscape: false,
+                closeByDocument : false,
                 templateUrl: './app/Views/templates/successDialog-tpl.html',
                 data: {
                     msg: $sce.trustAsHtml(msg)
@@ -28,6 +32,8 @@ peercentileApp.service('customDialog', ['ngDialog', '$sce',
             return ngDialog.open({
                 template: '<div style="margin:auto;" class="loader"></div><div class="text-lg-center">Loading....</div>',
                 showClose: false,
+                closeByEscape: false,
+                closeByDocument : false,
                 plain: true
             });
 

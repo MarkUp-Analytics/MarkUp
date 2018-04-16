@@ -14,5 +14,26 @@ function($http){
         
     }
 
+    this.getSchoolDetails = function(schoolIDVal){ //Method to get schools list for login page. 
+        return $http.get('/api/getSchoolDetails', {params:{schoolID:schoolIDVal}}).then(function(school){
+            return school.data;
+        })
+        .catch(function(err){
+            return err;
+        });
+        
+    }
+
+    this.getSubjectList = function(boardNameVal){ //Method to get schools list for login page. 
+        return $http.get('/api/getSubjectList', {params:{boardName:boardNameVal}}).then(function(subjectList){
+            return subjectList.data;
+        })
+        .catch(function(err){
+            return err;
+        });
+        
+    }
+
+
 
 }]);

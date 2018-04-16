@@ -17,5 +17,14 @@ function($http, authentication){
         
     }
 
+    this.createSubject = function(newSubject){
+        return $http.post('/api/createSubject', newSubject).then(function(data){
+            return data;
+        })
+        .catch(function(err){
+            return err;
+        });
+    }
+
 
 }]);

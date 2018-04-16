@@ -1,0 +1,32 @@
+<div class="container bg-fdfdfd px-0 pb-5">
+
+    <div ng-include src="'app/Views/homeHeader.html'"></div>
+
+    <div ng-controller="managerController">
+        <div class="box-shadow" ng-controller="mainController">
+            <form name="forms.newSubjectForm" class="form-signin mx-auto text-center mt-5 pt-5" novalidate>
+              <h3 class="form-signin-heading">Create New Subject</h3>
+              <br/>
+              <div ng-if="subjectExists" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('subjectNameExists')}}</div>
+              <div ng-if="newSubjectForm.$submitted && newSubjectForm.$error.required" class="mb-2 errorMsg alert alert-danger rounded-0">Required fields are missing!</div>
+              <div class="form-group">
+              <div class="form-group">
+                <select class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" name="board" ng-model="session.newSubject.board" aria-placeholder="School Board" required>
+                    <option value="" disabled selected>Select Board</option>
+                    <option value="CBSE">CBSE</option>
+                    <option value="ICSE">ICSE</option>
+                    <option value="Matriculation">Matriculation</option>
+                    <option value="TN State Board">TN State Board</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                <input type="text" id="subjectName" name="subjectName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0"
+                  ng-model="session.newSubject.subjectName" ng-change="subjectNameExists = false; errorCreatingSubject = false" placeholder="Subject"
+                  required>
+              </div>
+              <br/>
+              <button class="btn btn-outline-primary btn-block rounded-0 pointer" ng-click="createSubject()" type="submit">Create Subject</button>
+            </form>
+          </div>
+    </div>
+</div>

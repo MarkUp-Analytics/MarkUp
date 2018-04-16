@@ -47,3 +47,26 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.centerAlign{
+    text-align: center;
+}
+
+.fancy-checkbox input[type="checkbox"] {
+    display: none;
+}
+ 
+.fancy-checkbox span:before {
+    font-family: "FontAwesome";
+    font-style: normal;
+    width: 1em;
+    height: 1em;
+    content: '\f096';
+    margin-right: .3em;
+    /* color: blue; */
+    /* text-shadow: 1px 1px 10px #272634; */
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ span:before {
+    content: '\f046';
+}

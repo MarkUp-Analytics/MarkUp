@@ -128,6 +128,15 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
 
             })
 
+            .state('main.createSubject', {
+                url: "/createNewSubject",
+                templateUrl: "./app/Views/newSubject.html",
+                data:{
+                    permission: ["manager"]
+                },
+                
+            })
+
             .state('admin', {
                 url: "/admin",
                 controller: "adminController",
@@ -200,6 +209,15 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
                         loadingDialog.close();
                     });
                 }
+            })
+
+            .state('admin.linkTeachers', {
+                url:"/linkTeachers",
+                templateUrl:"./app/Views/linkTeachers.html",
+                data:{
+                    permission: ["admin"]
+                },
+                controller:"linkTeachersController",
             })
 
             .state('teacher', {

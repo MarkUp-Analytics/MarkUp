@@ -18,7 +18,9 @@ var setUpController = require('./controllers/setupController');
 var schoolController = require('./controllers/schoolController');
 var teacherController = require('./controllers/teacherController');
 var studentController = require('./controllers/studentController');
+var subjectController = require('./controllers/subjectController');
 var fileUploadController = require('./controllers/fileUploadController');
+var classAPIController = require('./controllers/classAPIController');
 
 var port = process.env.port || 3000;
 
@@ -32,5 +34,7 @@ schoolController(app);
 fileUploadController(app);
 teacherController(app);
 studentController(app);
+subjectController(app);
+classAPIController(app);
 
 app.listen(port);

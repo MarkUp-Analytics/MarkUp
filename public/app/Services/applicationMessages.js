@@ -20,6 +20,11 @@ function(){
     customMessages.invalidPassword = "Password is not valid!";
     customMessages.passwordMismatch = "Password didnot match!";
     customMessages.fileUploaded = "File successfully uploaded!";
+    customMessages.subjectNameExists = "Subject name already exists!";
+    customMessages.subjectCreated = "A subject is successfully created!";
+    customMessages.noClassesFound = "No classes found for the selected year!";
+    customMessages.subjectTeacherLinkSuccess = "Successfully linked subjects and teachers.";
+    customMessages.teacherArrayEmpty = "Select at least one teacher for the selected subjects.";
     
     
     this.getMessage = function(property){ //Method to get custom message

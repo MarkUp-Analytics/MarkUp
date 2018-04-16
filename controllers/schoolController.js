@@ -52,6 +52,22 @@ module.exports = function (app) {
         })
     });
 
+    app.get('/api/getSchoolDetails', function(request, response){ //API method to get one school based on ID
+        school.findOne({
+            $and: [
+                { _id: request.query.schoolID },
+                {recordStatusFlag: 'Active'}
+            ]
+        }, function(err, school){
+            if(err){
+                throw err;
+            }
+            else{
+                response.send(school);
+            }
+        })
+    });
+
     app.get('/api/deleteAllSchools', function(response, request){
         school.remove({}, function(err, data){
             return response.data;

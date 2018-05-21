@@ -25,6 +25,8 @@ function(){
     customMessages.noClassesFound = "No classes found for the selected year!";
     customMessages.subjectTeacherLinkSuccess = "Successfully linked subjects and teachers.";
     customMessages.teacherArrayEmpty = "Select at least one teacher for the selected subjects.";
+    customMessages.selectgraduationYear = "Select the anticipated graduation year to fetch the class details.";
+    customMessages.selectClass = "Select a class to link teachers and subjects.";
     
     
     this.getMessage = function(property){ //Method to get custom message

@@ -32,6 +32,29 @@
                 </div>
                 <div class="col-md-2"></div>
             </div>
+            <div class="row" ng-if="!batch">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 centerAlign mb-2 errorMsg alert alert-danger rounded-0">
+                    {{applicationMessages.getMessage('selectgraduationYear')}}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row" ng-if="batch && classList.length > 0 && !session.selectedObj._id">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 centerAlign mb-2 errorMsg alert alert-danger rounded-0">
+                    {{applicationMessages.getMessage('selectClass')}}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row" ng-if="batch && classList.length === 0">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 centerAlign mb-2 errorMsg alert alert-danger rounded-0">
+                    {{applicationMessages.getMessage('noClassesFound')}}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
 
             <div class="row" ng-show="session.selectedObj._id">
                 <div class="col-md-2"></div>
@@ -48,12 +71,14 @@
                     <div class="row mt-4 mb-4" ng-repeat="subject in subjectList track by $index">
                         <div class="col-md-4">
                             <label class="pointer fancy-checkbox">
-                                <input type="checkbox" class="checkbox style-2 pointer" ng-true-value="'{{subject._id}}'" ng-false-value="" ng-model="session.selectedObj.subjects[subject.subjectName].subjectID" ng-change="updateSessionObj(subject.subjectName, session.selectedObj.subjects[subject.subjectName].subjectID)">
+                                <input type="checkbox" class="checkbox style-2 pointer" ng-true-value="'{{subject._id}}'" ng-false-value="" ng-model="session.selectedObj.subjects[subject.subjectName].subjectID"
+                                    ng-change="updateSessionObj(subject.subjectName, session.selectedObj.subjects[subject.subjectName].subjectID)">
                                 <span>{{subject.subjectName}}</span>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <ui-select multiple ui-select-required ng-disabled="!session.selectedObj.subjects[subject.subjectName] || !session.selectedObj.subjects[subject.subjectName].subjectID" ng-model="session.selectedObj.subjects[subject.subjectName].teacherArray" class="width-100" theme="select2">
+                            <ui-select multiple ui-select-required ng-disabled="!session.selectedObj.subjects[subject.subjectName] || !session.selectedObj.subjects[subject.subjectName].subjectID"
+                                ng-model="session.selectedObj.subjects[subject.subjectName].teacherArray" class="width-100" theme="select2">
                                 <ui-select-match placeholder="Select Teacher(s)...">{{$item.firstName + " " + $item.lastName}}</ui-select-match>
                                 <ui-select-choices repeat="teacher._id as teacher in teacherList | filter: ({displayText: $select.search})">
                                     <div ng-bind-html="teacher.displayText | highlight: $select.search"></div>

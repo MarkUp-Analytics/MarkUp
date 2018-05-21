@@ -1,7 +1,14 @@
-<div class="container bg-fdfdfd px-0 pb-5">
+<div ng-include src="'app/Views/homeHeader.html'"></div>
 
-    <div ng-include src="'app/Views/homeHeader.html'"></div>
+<nav class="container navbar bg-fdfdfd border border-right-0 border-left-0 border-bottom-0 nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllStudents({schoolID:userInfo.schoolID})">View Students</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.studentLogin">Add Student(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllTeachers({schoolID:userInfo.schoolID})">View Teachers</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.teacherLogin">Add Teacher(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.linkTeachers">Link Students & Teachers</a>    
+</nav>
 
+<div class="container bg-white px-0 border border-right-0 border-left-0 border-bottom-0">
     <div class="row">
         <div class="col-md-12">
             <div class="row">

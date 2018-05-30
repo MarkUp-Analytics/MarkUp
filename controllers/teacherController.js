@@ -1,9 +1,10 @@
 var teacher = require('../models/teachers');
+var classModel = require('../models/classModel');
 
 module.exports = function (app) {
     app.post('/api/getTeacherInfo', function (request, response) { 
         
-        teacher.findOne({ //To find student who has logged in.
+        teacher.findOne({ //To find teacher who has logged in.
             $and: [
                 { firstName: request.body.firstName },
                 { lastName: request.body.lastName },
@@ -29,6 +30,44 @@ module.exports = function (app) {
             }
         });
 
+    });
+
+    app.get('/api/getMyClassWithSubjects', function(request, response){
+        classModel.find({
+            $and: [
+                { schoolID: request.query.schoolID},
+                {recordStatusFlag: 'Active'}
+            ]
+        }).select('-recordCreatedDate -recordLastModified -recordStatusFlag -__v').exec(function (err, classesFromDB) {
+            if (err) { throw err; }
+
+            else {
+                var classWithSubjects = [];
+                for(var classIdx = 0; classIdx < classesFromDB.length; classIdx++){
+                    var currentClass = classesFromDB[classIdx];
+
+                    if(currentClass.subjects){
+                        for(var key in currentClass.subjects){
+                            if(currentClass.subjects[key].hasOwnProperty('teacherArray')){
+                                var idx = currentClass.subjects[key].teacherArray.indexOf(request.query.teacherID);
+
+                                if(idx != -1){
+                                    var obj  = {};
+                                    obj.classID = currentClass._id;
+                                    obj.class = currentClass.class;
+                                    obj.section = currentClass.section;
+                                    obj.batchYear = currentClass.batchYear;
+                                    obj.subjectID = currentClass.subjects[key].subjectID;
+                                    obj.subjectName = key;
+                                    classWithSubjects.push(obj);
+                                }
+                            }
+                        }
+                    }
+                }
+                response.send(classWithSubjects);
+            }
+        });
     });
 
     app.post('/api/getAllTeachers', function(request, response){

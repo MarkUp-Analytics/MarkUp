@@ -5,8 +5,45 @@
     <div class="row m-4">
         <div class="col-md-12">
             <h3>TEACHER PROFILE</h3>
-            <div><span><b>Name: </b>{{userInfo.firstName + " " + userInfo.lastName}}</span></div>
-            <div><span><b>School: </b>{{teacherDetails.userID.schoolID.schoolName}}</span></div>
+            <div>
+                <span>
+                    <b>Name: </b>{{userInfo.firstName + " " + userInfo.lastName}}</span>
+            </div>
+            <div>
+                <span>
+                    <b>School: </b>{{teacherDetails.userID.schoolID.schoolName}}</span>
+            </div>
+            <h3>List of classes</h3>
+            <div>
+                <table class="table table-hover table-borderless table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="pl-2">Subject
+                                <i class="material-icons pull-right text-muted pointer">swap_vert</i>
+                            </th>
+                            <th scope="col" class="pl-2">Class
+                                <i class="material-icons pull-right text-secondary pointer">swap_vert</i>
+                            </th>
+                            <th scope="col" class="pl-2">Section
+                                <i class="material-icons pull-right text-secondary pointer">swap_vert</i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in classWithSubjectList track by $index">
+                            <td>
+                                {{item.subjectName}}
+                            </td>
+                            <td>
+                                {{item.class}}
+                            </td>
+                            <td>
+                                {{item.section}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

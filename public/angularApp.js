@@ -236,19 +236,6 @@ peercentileApp.config(['$stateProvider', '$urlRouterProvider',
                 data: {
                     permission: ["teacher"]
                 },
-                resolve:{
-                    teacherInfo: function(authentication, teacherService){
-                        var userInfo = authentication.getUserInfo();
-                        var teacherDetails = {};
-                        teacherDetails.firstName = userInfo.firstName;
-                        teacherDetails.lastName = userInfo.lastName;
-                        teacherDetails.userID = userInfo._id;
-                        return teacherService.getTeacherInfo(teacherDetails);
-                    }
-                },
-                controller: function ($scope, teacherInfo) {
-                    $scope.teacherDetails = teacherInfo;
-                }
             })
 
             .state('student', {

@@ -1,61 +1,62 @@
 'use strict';
 
-peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state',  '$location', '$anchorScroll', 'authentication',  function($scope, $rootScope, $state, $location, $anchorScroll, authentication){
+peercentileApp.controller('mainController', ['$scope', '$rootScope', '$state', '$location', '$anchorScroll', 'authentication', 'managerService', 'applicationMessages', 'schoolService', 'customDialog', function ($scope, $rootScope, $state, $location, $anchorScroll, authentication, managerServices, applicationMessages, schoolService, customDialog) {
 
     window.$scope = $scope;
+    $scope.$state = $state;
 
     $scope.userInfo = authentication.getUserInfo();
-    
+    $scope.applicationMessages = applicationMessages;
+
+    $scope.profile = {};
+
     $scope.invalidLogin = false;
     $scope.userNameExists = false;
     $scope.errorCreatingUser = false;
+    $scope.missingRequiredFields = false;
 
-    $scope.scrollTo = function(id){
+    $scope.scrollTo = function (id) {
         $location.hash(id);
         $anchorScroll();
     };
 
-    $scope.createUser = function(){
-        authentication.createUser($scope.newUser).then(function(data){
-            $scope.userNameExists = false;
-            $scope.errorCreatingUser = false;
-            if(data.status == 200){
-                $state.go(data.data.role);
-            }
+    $scope.createUser = function () { // method to create a new user
+        if($scope.newUserForm && $scope.newUserForm.$valid){//Call will be made to server only if the newUser form is valid
+            var loadingDialog = customDialog.loadingDialog(); //To show loading icon until the user is created
 
-            else if(data.status == 400){
-                if(data.data.msg == "user exists"){
-                    $scope.userNameExists = true;
-                }
+                authentication.createUser($scope.newUser).then(function (data) {
+                    $scope.userNameExists = false;
+                    $scope.errorCreatingUser = false;
+                    if (data.status == 200) {
+                        customDialog.successDialog("Username " + data.data.username + " successfully created!");
+                        $state.go(data.data.role + '.index');
+                    }
+        
+                    else if (data.status == 400) {
+                        if (data.data.msg == "user exists") {
+                            customDialog.errorDialog(applicationMessages.getMessage('userNameExists'));
+                        }
+        
+                        else if (data.data.msg == "error creating user") {
+                            customDialog.errorDialog(applicationMessages.getMessage('errorCreatingUser'));
+                        }
+                    }
+        
+                }, function(error){
+                    customDialog.errorDialog(error);
+                }).finally(function(){
+                    loadingDialog.close();
 
-                else if(data.data.msg == "error creating user"){
-                    $scope.errorCreatingUser = true;
-                }
+                });
             }
-            
-        });
+        
     };
 
-    $scope.checkAuthentication = function(){
-        authentication.login($scope.profile).then(function(data){
-            $scope.invalidLogin = false;
-            if(data.status == 200){
-                console.log(data);
-                $state.go(data.data.role);
-            }
-
-            else{
-                $scope.invalidLogin = true;
-            }
-            
-        });
-
-    };
-
-    $scope.logout = function(){
+    $scope.logout = function () {
         authentication.removeUserInfo();
         $scope.userInfo = null;
         $location.url('/');
     };
 
-}]);
+}])
+

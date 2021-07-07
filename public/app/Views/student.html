@@ -1,0 +1,14 @@
+<div class="container bg-fdfdfd px-0 pb-5">
+
+    <div ng-include src="'app/Views/homeHeader.html'"></div>
+
+    <div class="row m-4">
+        <div class="col-md-12">
+            <h3>STUDENT PROFILE</h3>
+            <div><span><b>Name: </b>{{userInfo.firstName + " " + userInfo.lastName}}</span></div>
+            <div><span><b>School: </b>{{studentDetails.classID.schoolID.schoolName}}</span></div>
+            <div><span><b>Class: </b>{{studentDetails.classID.class}}</span></div>
+            <div><span><b>Section: </b>{{studentDetails.classID.section}}</span></div>
+        </div>
+    </div>
+</div>

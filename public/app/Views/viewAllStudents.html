@@ -1,0 +1,99 @@
+<div ng-include src="'app/Views/homeHeader.html'"></div>
+
+<nav class="container navbar bg-fdfdfd border border-right-0 border-left-0 border-bottom-0 nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllStudents({schoolID:userInfo.schoolID})">View Students</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.studentLogin">Add Student(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllTeachers({schoolID:userInfo.schoolID})">View Teachers</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.teacherLogin">Add Teacher(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.linkTeachers">Link Students & Teachers</a>    
+</nav>
+
+<div class="container bg-white px-0 border border-right-0 border-left-0 border-bottom-0">
+    <div class="d-block d-lg-none bg-fdfdfd border border-right-0 border-left-0 border-top-0 px-3 px-md-5 py-5 py-md-4">
+        <div class="form-row">
+            <div class="col-md pr-md-5">
+                <label for="">Search</label>
+                <input type="search" class="form-control bg-white rounded-0 border border-left-0 border-right-0 border-top-0" placeholder="Type to search...">
+                <hr class="d-block d-md-none border border-top-0"/>
+            </div>
+            <div class="col-md pr-md-5">
+                <label for="">Class</label>
+                <select class="custom-select w-100 rounded-0 border border-left-0 border-right-0 border-top-0" id="">
+                <option class="bg-none" selected>Choose...</option>
+                <option value="1">10</option>
+                <option value="2">11</option>
+                <option value="3">12</option>
+                </select>
+                <hr class="d-block d-md-none border border-top-0"/>
+            </div>
+            <div class="col-md">
+                <label for="">Section</label>
+                <select class="custom-select w-100 rounded-0 border border-left-0 border-right-0 border-top-0" id="">
+                <option class="bg-none" selected>Choose...</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mx-0">
+        <div class="col-sm-3 d-none d-lg-block bg-fdfdfd border border-top-0 border-left-0 border-bottom-0 p-3">
+            <div class="form-row px-2">
+                <label for="">Search</label>
+                <input type="search" class="form-control bg-white rounded-0 border border-left-0 border-right-0 border-top-0" placeholder="Type to search...">
+            </div>
+            <hr class="border border-top-0"/>
+            <div class="form-row px-2">
+                <label for="">Class</label>
+                <select class="custom-select w-100 rounded-0 border border-left-0 border-right-0 border-top-0" id="">
+                <option class="bg-none" selected>Choose...</option>
+                <option value="1">10</option>
+                <option value="2">11</option>
+                <option value="3">12</option>
+                </select>
+            </div>
+            <hr class="border border-top-0"/>
+            <div class="form-row px-2">
+                <label for="">Section</label>
+                <select class="custom-select w-100 rounded-0 border border-left-0 border-right-0 border-top-0" id="">
+                <option class="bg-none" selected>Choose...</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+                </select>
+            </div>
+            <hr class="border border-top-0"/>
+        </div>
+
+        <div class="col p-3">
+            <h3>Registered Students</h3><br/>
+            <div ng-if="!studentArr || studentArr.length == 0">
+                No students available!
+            </div>
+            <div ng-if="studentArr.length > 0">
+                <table class="table table-hover table-borderless table-responsive-sm">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="pl-2">#<i class="material-icons pull-right text-muted pointer">swap_vert</i></th>
+                        <th scope="col" class="pl-2">First Name<i class="material-icons pull-right text-secondary pointer">swap_vert</i></th>
+                        <th scope="col" class="pl-2">Last Name<i class="material-icons pull-right text-secondary pointer">swap_vert</i></th>
+                        <th scope="col" class="pl-2">Class<i class="material-icons pull-right text-secondary pointer">swap_vert</i></th>
+                        <th scope="col" class="pl-2">Section<i class="material-icons pull-right text-secondary pointer">swap_vert</i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="student in studentArr track by $index">
+                            <td class="pl-2">{{student.userID.username}}</td>
+                            <td class="pl-2">{{student.firstName}}</td>
+                            <td class="pl-2">{{student.lastName}}</td>
+                            <td class="pl-2">{{student.classID.class}}</td>
+                            <td class="pl-2">{{student.classID.section}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

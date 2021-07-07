@@ -4,16 +4,17 @@ main {min-height: 50vh}
 .width-height-100-px {width: 100px; height: 100px}
 .overflow-hidden {overflow: hidden;}
 
-.hisdif {height: 250px}
-
 .bg-fafafa {background: #FAFAFA}
+.bg-fdfdfd {background: #FDFDFD}
 .bg-ffffff {background: #FFFFFF}
+.bg-navbar-markup-logo-rectangle {background: url(../../images/markup_rectangle.png) center center; background-repeat: no-repeat; background-size: contain; height: 60px; width: 150px;}
+.bg-navbar-markup-logo-square {background: url(../../images/markup_square.png) center center; background-repeat: no-repeat; background-size: contain; height: 120px; width: 150px;}
 .bg-index-jumbotron {background: url(../../images/index-jumbotron.png) center center; background-repeat: no-repeat; background-size: cover;height: 600px;}
 .bg-study-smarter-not-harder {background: url(../../images/study-smarter-not-harder.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
 .bg-track-progress {background: url(../../images/track-progress.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
 .bg-know-where-you-stand {background: url(../../images/know-where-you-stand.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
 .bg-exceed-expectations {background: url(../../images/exceed-expectations.png) center center; background-repeat: no-repeat; background-size: contain; width: 95%; height: 150px;}
-.bg-index-pricing {background: url(../../images/index-pricing.png) center center; background-repeat: no-repeat; background-size: cover; height: 350px;}
+.bg-pricing-jumbotron {background: url(../../images/pricing-jumbotron.png) center center; background-repeat: no-repeat; background-size: cover; height: 167px;}
 .bg-markup-green {background: #00A3B4}
 .bg-markup-red {background: #F7005F}
 .bg-markup-violet {background: #69005C}
@@ -27,13 +28,13 @@ main {min-height: 50vh}
 .text-size-90-pc {font-size: 90%}
 .text-size-120-pc {font-size: 120%}
 
-a {color: #999999}
-a:focus, a:hover {color: #555555}
+.material-icons.md-30 { font-size: 30px; }
 
 .form-control {background: none}
 .form-control:focus,.form-control:hover {background: none; box-shadow: none}
 .btn-guide:focus {box-shadow: none}
 
+.form-signin {width: 80%; max-width: 400px}
  .flex-equal > * {-ms-flex: 1; -webkit-box-flex: 1; flex: 1;}
 
 @media screen and (min-width: 576px) {

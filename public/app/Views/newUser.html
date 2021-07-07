@@ -1,49 +1,101 @@
-<div class="container bg-none" ng-controller="mainController">
-  <main>
-    <div class="row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
-        <form class="form-signin p-3">
-          <h3 class="form-signin-heading">Create your Markup Account</h3>
-          <br/>
-          <div class="input-group mb-4">
-            <input type="text" class="form-control mr-4" id="firstName" placeholder="First name" ng-model="newUser.firstName" required>
-            <input type="text" class="form-control" id="lastName" placeholder="Last name" ng-model="newUser.lastName" required>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="schoolName" placeholder="School name" ng-model="newUser.schoolName" required>
-          </div>
-          <div class="form-group">
-            <input type="text" id="userName" class="form-control" ng-class="userNameExists?'highlightError':''" ng-model="newUser.username" ng-change="userNameExists = false; errorCreatingUser = false" placeholder="Username" required>
-            <div ng-if="userNameExists" class="mt-2 errorMsg">User name already exists!</div> 
-            <div ng-if="errorCreatingUser" class="mt-2 errorMsg">Error creating user!</div>
-          </div>
-          <div class="form-group">
-            <input type="password" id="password" class="form-control" ng-model="newUser.pwd" placeholder="Password" required>
-          </div>
-          <div class="form-group">
-            <input type="password" id="repeatPassword" class="form-control" ng-model="newUser.pwd" placeholder="Confirm Password" required>
-          </div>
-          <div class="form-group">
-            <select class="form-control" ng-model="newUser.role" aria-placeholder="Role">
-              <option value="" disabled selected>Select your role</option>
-              <option value="admin">Admin</option>
-              <option value="teacher">Teacher</option>
-              <option value="student">Student</option>
-            </select>
-          </div>
-          <br/>
-          <div class="row">
-            <div class="col-sm-6">
-              <button class="btn btn-lg btn-danger btn-block rounded-0 pointer" ng-click="createUser()" type="submit">Create User</button>
-            </div>
-            <div class="col-sm-6">
-            </div>
-          </div>
+<div class="container bg-fdfdfd px-0 pb-5">
 
-        </form>
+  <div ng-include src="'app/Views/homeHeader.html'"></div>
+
+  <div class="box-shadow" ng-controller="mainController">
+    <form name="newUserForm" class="form-signin mx-auto text-center mt-5 pt-5" novalidate>
+      <h3 class="form-signin-heading">Create your Markup Account</h3>
+      <br/>
+      <div ng-if="schoolExists" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('userNameExists')}}</div>
+      <div ng-if="errorCreatingUser" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('errorCreatingUser')}}</div>
+      <div ng-if="newUserForm.$submitted && (newUserForm.$error.required || newUserForm.$error.uiSelectRequired)" class="mb-2 errorMsg alert alert-danger rounded-0">Required fields are missing!</div>
+      <div ng-if="newUserForm.$submitted && (newUserForm.$error.inCorrectLength
+      || newUserForm.$error.noNumber || newUserForm.$error.noSpecialCharacter)" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('invalidPassword')}}</div>
+      <div ng-if="newUserForm.$submitted && newUserForm.$error.passwordMismatch" class="mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('passwordMismatch')}}</div>
+      <div class="form-group">
+        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="firstName" name="firstName"
+          placeholder="First name" ng-model="newUser.firstName" required>
       </div>
-      <div class="col-sm-2"></div>
-    </div>
-  </main>
+      <div class="form-group">
+        <input type="text" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" id="lastName" name="lastName"
+          placeholder="Last name" ng-model="newUser.lastName" required>
+      </div>
+      <div class="form-group">
+        <ui-select id="schoolName" name="schoolName" class="width-100" ui-select-required ng-model="newUser.schoolID" theme="select2"
+          title="Choose a school">
+          <ui-select-match placeholder="School Name">{{$select.selected.schoolName + ", " + $select.selected.city + " - " + $select.selected.pincode}}</ui-select-match>
+          <ui-select-choices repeat="school._id as school in schoolList | filter: {schoolName: $select.search}">
+            <div ng-bind-html="school.schoolName | highlight: $select.search"></div>
+            <small>
+              Board: {{school.board + " "}} | City: {{school.city + " "}} | Pincode:
+              <span ng-bind-html="''+school.pincode | highlight: $select.search"></span>
+            </small>
+          </ui-select-choices>
+        </ui-select>
+
+      </div>
+      <div class="form-group">
+        <input type="text" id="userName" name="userName" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0"
+          ng-model="newUser.username" ng-change="userNameExists = false; errorCreatingUser = false" placeholder="Username"
+          required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" name="password" title="Password Validation" data-content="Testing" data-template-url="passwordValidation.html"
+          bs-popover trigger="focus" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" validate-password ng-model="newUser.pwd" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="repeatPassword" name="repeatPassword" class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0"
+          ng-model="newUser.confirmPwd" placeholder="Confirm Password" password-verify="{{newUser.pwd}}" required>
+      </div>
+      <div class="form-group">
+        <select class="form-control bg-none border-top-0 border-right-0 border-left-0 rounded-0" ng-model="newUser.role" name="role"
+          aria-placeholder="Role" required>
+          <option value="" disabled selected>Select your role</option>
+          <option value="admin">Admin</option>
+          <option value="teacher">Teacher</option>
+          <option value="student">Student</option>
+          <option value="manager">Manager</option>
+        </select>
+      </div>
+      <br/>
+      <button class="btn btn-outline-primary btn-block rounded-0 pointer" ng-click="createUser()" type="submit">Create User</button>
+    </form>
+  </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+  });
+</script>
+<script type="text/ng-template" id="passwordValidation.html">
+  <div class="popover" tabindex="-1" ng-show="content">
+      <div class="arrow"></div>
+      <h5 class="popover-title pwdPopoverHeader" ng-bind-html="title" ng-show="title"></h5>
+      <div class="popover-content">
+            <div class="row m-1">
+              <div class="col-md-1 ml-0 pl-1 pr-0">
+                <i ng-class="(newUserForm.password.$dirty && !newUserForm.$error.inCorrectLength)?'fa fa-check':'fa fa-times'"></i>
+              </div>
+              <div class="col-md-11 pl-0">
+              Password length must be at least 6 characters.
+              </div>
+            </div>
+            <div class="row m-1">
+                <div class="col-md-1 ml-0 pl-1 pr-0">
+                  <i ng-class="(newUserForm.password.$dirty && !newUserForm.$error.noNumber)?'fa fa-check':'fa fa-times'"></i>
+                </div>
+                <div class="col-md-11 pl-0">
+                  Password must contain at least one number.
+                </div>
+            </div>
+            <div class="row m-1">
+                  <div class="col-md-1 ml-0 pl-1 pr-0">
+                    <i ng-class="(newUserForm.password.$dirty && !newUserForm.$error.noSpecialCharacter)?'fa fa-check':'fa fa-times'"></i>
+                  </div>
+                  <div class="col-md-11 pl-0">
+                      Password must contain at least one symbol in this list !@#$%^&*()=+_- or a space.
+                  </div>
+            </div>
+      </div>
+  </div>
+</script>

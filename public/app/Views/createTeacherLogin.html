@@ -1,0 +1,52 @@
+<div ng-include src="'app/Views/homeHeader.html'"></div>
+
+<nav class="container navbar bg-fdfdfd border border-right-0 border-left-0 border-bottom-0 nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllStudents({schoolID:userInfo.schoolID})">View Students</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.studentLogin">Add Student(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllTeachers({schoolID:userInfo.schoolID})">View Teachers</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.teacherLogin">Add Teacher(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.linkTeachers">Link Students & Teachers</a>    
+</nav>
+
+<div class="container bg-white px-0 border border-right-0 border-left-0 border-bottom-0">
+    <div ng-controller="adminController">
+        <div class="row mx-0 p-3 px-md-5">
+            <div class="col-md">
+                <figure class="figure">
+                    <img src="images/teachers-spreadsheet-sample.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                    <figcaption class="figure-caption text-center">Sample file for teachers</figcaption>
+                    <hr class="d-block d-md-none border border-top-0" />
+                </figure>
+            </div>
+
+            <form class="col-md">
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">
+                        <span class=" text-size-90-pc">
+                            <p>Browse for the spreadsheet of teachers, in CSV/XLSX format.</p>
+                            <p>Column A should have the unique teacher ID of teachers. This number  will serve as their respective usernames.
+                            </p>
+                            <p>Column B should have the teacher's First name.</p>
+                            <p>Column C should have the teacher's Last name/Initial.</p>
+                            <p>Column F should have the student's Date of Birth(DOB).</p>
+                        </span>
+                    </label>
+                    <div ng-if="noFileFound" class="errorMsg">{{applicationMessages.getMessage('noFileFound')}}</div>
+                    <div ng-if="wrongFileExtension" class="errorMsg">{{applicationMessages.getMessage('wrongFileExtension')}}</div>
+
+                    <input type="file" id="upload_teachers_userinfo" file-model ng-model="filePath" />
+                </div>
+            </form>
+        </div>
+
+        <hr class="mr-5 ml-5 border border-top-0" />
+
+        <div class="row mx-0 p-3 pb-5 px-md-5">
+            <div class="col-md text-right">
+                <button type="button" class="btn btn-primary" ng-click="uploadFile('teacher')">Upload</button>
+                <button type="button" class="btn btn-secondary" ng-click="filePath=null;">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>

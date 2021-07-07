@@ -1,0 +1,110 @@
+<div ng-include src="'app/Views/homeHeader.html'"></div>
+
+<nav class="container navbar bg-fdfdfd border border-right-0 border-left-0 border-bottom-0 nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllStudents({schoolID:userInfo.schoolID})">View Students</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.studentLogin">Add Student(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.viewAllTeachers({schoolID:userInfo.schoolID})">View Teachers</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.teacherLogin">Add Teacher(s)</a>
+    <a class="flex-sm-fill text-sm-center nav-link" ui-sref="admin.linkTeachers">Link Students & Teachers</a>    
+</nav>
+
+<div class="container bg-white px-0 border border-right-0 border-left-0 border-bottom-0">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label style="float:left;" class="mr-3 mt-2">Anticipated graduation year: </label>
+                        <select class="form-control" style="width:100px;" ng-model="batch" ng-options="year for year in yearArr" ng-change="session={};getClassList(batch)"
+                            required></select>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-1">
+                    <div class="form-group">
+                        <label style="float:left;" class="mr-3">class: </label>
+                        <ui-select ng-disabled="!batch || classList.length === 0" id="class" name="class" ng-model="session.selectedObj" theme="select2"
+                            title="Choose a Class">
+                            <ui-select-match placeholder="Select Class">{{$select.selected.displayText}}</ui-select-match>
+                            <ui-select-choices repeat="class in classList | filter: ({displayText: $select.search})">
+                                <div ng-bind-html="class.displayText | highlight: $select.search"></div>
+                                <small>
+                                    <!-- Board: {{school.board + " "}} | City: {{school.city + " "}} | Pincode:
+                              <span ng-bind-html="''+school.pincode | highlight: $select.search"></span> -->
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row" ng-if="!batch">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 centerAlign mb-2 errorMsg alert alert-danger rounded-0">
+                    {{applicationMessages.getMessage('selectgraduationYear')}}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row" ng-if="batch && classList.length > 0 && !session.selectedObj._id">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 centerAlign mb-2 errorMsg alert alert-danger rounded-0">
+                    {{applicationMessages.getMessage('selectClass')}}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row" ng-if="batch && classList.length === 0">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 centerAlign mb-2 errorMsg alert alert-danger rounded-0">
+                    {{applicationMessages.getMessage('noClassesFound')}}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row" ng-show="session.selectedObj._id">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div ng-if="teacherArrayEmpty" class="centerAlign mb-2 errorMsg alert alert-danger rounded-0">{{applicationMessages.getMessage('teacherArrayEmpty')}}</div>
+                    <div class="row">
+                        <div class="col-md-4 centerAlign">
+                            <b>Subject Name</b>
+                        </div>
+                        <div class="col-md-8 centerAlign">
+                            <b>Teachers</b>
+                        </div>
+                    </div>
+                    <div class="row mt-4 mb-4" ng-repeat="subject in subjectList track by $index">
+                        <div class="col-md-4">
+                            <label class="pointer fancy-checkbox">
+                                <input type="checkbox" class="checkbox style-2 pointer" ng-true-value="'{{subject._id}}'" ng-false-value="" ng-model="session.selectedObj.subjects[subject.subjectName].subjectID"
+                                    ng-change="updateSessionObj(subject.subjectName, session.selectedObj.subjects[subject.subjectName].subjectID)">
+                                <span>{{subject.subjectName}}</span>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <ui-select multiple ui-select-required ng-disabled="!session.selectedObj.subjects[subject.subjectName] || !session.selectedObj.subjects[subject.subjectName].subjectID"
+                                ng-model="session.selectedObj.subjects[subject.subjectName].teacherArray" class="width-100" theme="select2">
+                                <ui-select-match placeholder="Select Teacher(s)...">{{$item.firstName + " " + $item.lastName}}</ui-select-match>
+                                <ui-select-choices repeat="teacher._id as teacher in teacherList | filter: ({displayText: $select.search})">
+                                    <div ng-bind-html="teacher.displayText | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row" ng-show="session.selectedObj._id">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 centerAlign">
+                    <a href="" class="btn btn-danger" ng-click="saveSubjectLink()">Save</a>
+                    <a href="" class="btn btn-primary" ng-click="">Cancel</a>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
